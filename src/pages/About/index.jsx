@@ -3,7 +3,13 @@ import React from 'react'
 const AboutPage = () => {
   return (
     <div>
-      About page
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
+      <h1>dfsd jfsdjf hsldfsdfjhsadjfs kdjfhsd kjsdkjfh</h1>
     </div>
   )
 }

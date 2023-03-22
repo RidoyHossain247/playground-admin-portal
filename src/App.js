@@ -1,19 +1,20 @@
+
 import React from 'react';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import HomePage from './pages/Home';
 import AboutPage from './pages/About';
+import Layout from './components/layout';
+import Dashboard from './components/layout/dashborad';
 
 function App() {
   return (
     <Router>
-    
+      <Layout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
-    
+      </Layout>
+  
   </Router>
   );
 }
