@@ -1,15 +1,18 @@
 
-import { Box, TextField, Button, Typography, Link, Divider, } from "@mui/material"
+import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
 import { useStoreActions } from "easy-peasy";
 import { useFormik } from "formik";
-import jwtDecode from "jwt-decode";
 import * as yup from 'yup'
-import api from '../../../service'
-import { Navigate } from "react-router-dom"
+import useAuth from "../../../hooks/useAuth";
+import { useNavigate, Link } from "react-router-dom"
 
 const SignInPage = () => {
 
-    const authAction = useStoreActions((action) => action.auth);
+    const { handelLogin } = useAuth()
+
+    const navigate = useNavigate()
+
+
 
     const personSchema = yup.object({
         email: yup.string().email().required("Please enter your email"),
@@ -25,17 +28,11 @@ const SignInPage = () => {
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit: async (values, action) => {
+        onSubmit: (values, action) => {
             console.log("value", values)
-            const res = await api.post("/auth/login", initialValues)
-            const token = res.data.data
-            const user = jwtDecode(token)
-            authAction.login({
-                user,
-                token
-            })
+            handelLogin(values)
             action.resetForm()
-            Navigate("/")
+            navigate("/")
         },
         validationSchema: personSchema
 
@@ -65,7 +62,7 @@ const SignInPage = () => {
                     fontWeight: 'bold'
                 }}
             >
-                SingIn
+                Sing In
             </Typography>
             <Divider sx={{ width: "100%", mb: 3 }} />
             <form
@@ -97,10 +94,10 @@ const SignInPage = () => {
                 />
                 <Link
                     href="#"
-                    underline="none"
-                    sx={{
-                        ml: 'auto',
+                    style={{
+                        marginLeft: 'auto',
                         mb: 3,
+                        textDecoration: "none",
                         color: 'rgba(0, 0, 0, 0.68)'
                     }}
                 >
@@ -122,8 +119,17 @@ const SignInPage = () => {
                     SingIn
                 </Button>
             </form>
-            <Typography>Don't have an account? </Typography>
-            <Button
+            <Box sx={{ display: "flex", marginRight: "auto" }}>
+
+                <Typography sx={{ mr: 2, }}>Don't have an account? </Typography>
+                <Link to="/signup"
+                    style={{
+                        textDecoration: "none",
+                        color: '#3C1FF4',
+                    }}>Sign Up</Link>
+
+            </Box>
+            {/* <Button
                 fullWidth
                 sx={{
                     my: 2,
@@ -136,7 +142,7 @@ const SignInPage = () => {
                 }}
             >
                 SignUp
-            </Button>
+            </Button> */}
         </Box>
     )
 }
