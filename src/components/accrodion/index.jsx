@@ -5,12 +5,12 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh';
-import {Typography,Divider,Box } from '@mui/material'
-
+import {Typography,Divider,Box,} from '@mui/material'
+import {Link} from 'react-router-dom'
 const Accroding = (props) => {
     return (
         <>
-            <Accordion  sx={{width:'100%  !important', background:'#178edc', color:'white'}}>
+            < Accordion  sx={{width:'100%  !important', background:'#178edc', color:'white'}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon sx={{color:'white'}} />}
                 aria-controls="panel1a-content"
@@ -18,16 +18,17 @@ const Accroding = (props) => {
               >
                <Box sx={{display:'flex', alignItems:"center"}}>
                <BrightnessHighIcon sx={{pr:'5px', fontSize: '17px'}}/>
-                <Typography sx={{mr:'0 auto'}}>{props.Category}</Typography>
+                <Typography sx={{mr:'0 auto', fontWeight:'600'}}>{props.name}</Typography>
                </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  {props.CategoryAdd} 
+                  <Link style={{color:'white', textDecoration:"none"}} to={props.urlAdd}>{props.add}</Link>
                 </Typography>
                 <Divider sx={{paddingBottom:'4px'}}/>
                 <Typography>
-                 { props.CategoryList}
+                <Link style={{color:'white', textDecoration:"none"}}to={props.urlList}>{ props.list}</Link>
+                 
                 </Typography>
               </AccordionDetails>
             </Accordion>
