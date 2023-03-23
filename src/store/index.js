@@ -1,8 +1,10 @@
-import {createStore,persist} from "easy-peasy"
+import { createStore, persist } from "easy-peasy"
+import AuthModel from "./modal/auth-model";
 import DataModel from "./modal/data-model";
 
 const store = createStore({
-    data:persist(DataModel),
-    
-  });
-  export default store
+  auth: persist(AuthModel),
+  data: persist(DataModel),
+
+});
+export default store
