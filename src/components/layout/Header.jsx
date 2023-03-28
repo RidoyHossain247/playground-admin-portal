@@ -2,19 +2,17 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-<<<<<<< HEAD
-import {Menu, MenuItem } from '@mui/material';
-=======
 import { Button, Menu, MenuItem } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
->>>>>>> 2a76c715eb2139363e34dd55cc9aef13ec7cbbfd
+import { useStoreState } from 'easy-peasy';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { handelLogout } = useAuth()
 
-
+const AuthAvatar= useStoreState(state=>state.auth.user.firstName)
+console.log(AuthAvatar)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +20,9 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handelMyAccount = () =>{
+
+  }
 
   return (
     <Box>
@@ -30,7 +31,7 @@ const Header = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}>
-        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>Avatar</Typography>
+        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>{AuthAvatar}</Typography>
         <Avatar src="/static/images/avatar/2.jpg" />
       </Box>
 
@@ -44,7 +45,7 @@ const Header = () => {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handelMyAccount}>My account</MenuItem>
         <MenuItem onClick={handelLogout}>Logout</MenuItem>
       </Menu>
     </Box>

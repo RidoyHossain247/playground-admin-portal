@@ -52,6 +52,7 @@ const Layout = (props) => {
               </Typography>
               <Box sx={{}}>
                 <Accroding name="Colors" add="Colors Add" list="Colors List" urlList="#" urlAdd="#" />
+                <Accroding name="Size" add="Size Add" list="Size List" urlList="/size-list" urlAdd="/size-add" />
               </Box>
               <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
 
