@@ -17,7 +17,13 @@ const AddForm = () => {
 
   const handleSubmit = async (values, actions) => {
     console.log('values=', values)
-    const response = await createData(values)
+    var formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("image", values.image);
+    const headers = {
+      'Content-Type': 'multipart/form-data'
+    }
+    const response = await createData(formData, null, headers)
     if (response) {
       actions.resetForm()
       navigate('/list')
