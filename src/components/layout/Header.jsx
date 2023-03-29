@@ -2,14 +2,19 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import {Menu, MenuItem,Button } from '@mui/material';
+import { Button, Menu, MenuItem } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
+import { useStoreState } from 'easy-peasy';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { handelLogout } = useAuth()
 
+const AuthAvatar= useStoreState(state=>state.auth.user.firstName)
+
+console.log(AuthAvatar)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -17,6 +22,9 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handelMyAccount = () =>{
+
+  }
 
   return (
     <Box>
@@ -25,7 +33,7 @@ const Header = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}>
-        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>Avatar</Typography>
+        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>{AuthAvatar}</Typography>
         <Avatar src="/static/images/avatar/2.jpg" />
       </Box>
 
@@ -39,7 +47,7 @@ const Header = () => {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handelMyAccount}><Link style={{textDecoration:'none', color:'black'}} to="/account">My account</Link></MenuItem>
         <MenuItem onClick={handelLogout}>Logout</MenuItem>
       </Menu>
     </Box>

@@ -15,8 +15,16 @@ import VerifyEmailPage from './pages/Auth/verify-email'
 import ResetPasswordPage from './pages/Auth/reset-password';
 import PageNotFound from './pages/404';
 import { useStoreState } from 'easy-peasy';
-import Color from './pages/Color/index';
+import SizeAdd from './components/size/size-add';
+import SizeList from './components/size/size-list';
+import DashboardCard from './components/dashboard-card';
+import Account from './components/account';
 import Sbucategory from './pages/subcategories';
+import ColorAdd from "../src/pages/Color/create-color"
+import ColorList from './pages/Color/list-color';
+import SubcategoryList from './pages/subcategories/subcategories-list';
+
+import SubcategoryAdd from './pages/subcategories/create-subcategories';
 
 const PublicRoute = () => {
   return (
@@ -31,7 +39,7 @@ const PrivetRoute = () => {
 
     <Layout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<DashboardCard />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/list" element={<List />} />
         <Route path="/add" element={<Add />} />
@@ -39,9 +47,19 @@ const PrivetRoute = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/color" element={<Color />} />
+      
+        <Route path="/color-add" element={<ColorAdd />} />
+        <Route path="/color-list" element={<ColorList />} />
+        <Route path="/subcategory-list" element={<SubcategoryList />} />
+        <Route path="/subcategory-add" element={<SubcategoryAdd />} />
+
         <Route path="/subcategories" element={<Sbucategory />} />
         <Route path='*' element={<PageNotFound />} />
+        <Route path='/size-add' element={<SizeAdd />} />
+        <Route path='/size-list' element={<SizeList />} />
+        <Route path='/account' element={<Account />} />
+     
+      
       </Routes>
     </Layout>
 
