@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import { Button, Menu, MenuItem } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import { useStoreState } from 'easy-peasy';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -12,6 +13,7 @@ const Header = () => {
   const { handelLogout } = useAuth()
 
 const AuthAvatar= useStoreState(state=>state.auth.user.firstName)
+
 console.log(AuthAvatar)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -45,7 +47,7 @@ console.log(AuthAvatar)
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handelMyAccount}>My account</MenuItem>
+        <MenuItem onClick={handelMyAccount}><Link style={{textDecoration:'none', color:'black'}} to="/account">My account</Link></MenuItem>
         <MenuItem onClick={handelLogout}>Logout</MenuItem>
       </Menu>
     </Box>

@@ -1,6 +1,6 @@
 
 import { useStoreState } from 'easy-peasy';
-import { Divider, Grid, Input, Typography, TextareaAutosize, Button, } from "@mui/material"
+import { Divider, Grid, Typography, Button, } from "@mui/material"
 
 import { Box, } from "@mui/system"
 import youserImage from "../../assets/Images/FB_IMG_1651283972600.jpg"
@@ -19,7 +19,7 @@ const AuthAvatarcontact= useStoreState(state=>state.auth.user.contact)
             <Grid container spacing={2} sx={{ boxShadow: '1px 2px 10px rgba(0,0,0,0.3)', padding: '10px', borderRadius: '10px' }}>
                 <Grid item xs={3} >
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <img style={{ width: '50%', height: 'atuo', borderRadius: "100px", }} src={youserImage} />
+                        <img style={{ width: '50%', height: 'atuo', borderRadius: "100px", }} alt={youserImage} src={youserImage} />
                     </Box>
                     <Divider />
                     <Box sx={{ padding: '15px 20px', }}>

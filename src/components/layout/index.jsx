@@ -44,14 +44,14 @@ const Layout = (props) => {
 
               <Box sx={{}}>
                 <Accroding name="Category" add="Category Add" urlAdd="/add" urlList="/list" list="Category List" />
-                <Accroding name="Sub Category" add="Sub Category Add" list="Sub Category List" urlAdd="#" urlList="#" />
+                <Accroding name="Sub Category" add="Sub Category Add" list="Sub Category List" urlAdd="/subcategory-add" urlList="/subcategory-list" />
               </Box>
               <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
               <Typography sx={{ fontSize: '18px', fontWeight: '600', paddingLeft: '10px' }}>
                 Admin nmae
               </Typography>
               <Box sx={{}}>
-                <Accroding name="Colors" add="Colors Add" list="Colors List" urlList="#" urlAdd="#" />
+                <Accroding name="Colors" add="Colors Add" list="Colors List" urlList="/color-list" urlAdd="/color-add" />
                 <Accroding name="Size" add="Size Add" list="Size List" urlList="/size-list" urlAdd="/size-add" />
               </Box>
               <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
