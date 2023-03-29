@@ -5,9 +5,12 @@ import { useFormik } from 'formik';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import * as yup from 'yup'
 import useData from '../../hooks/useData';
+import { useNavigate } from 'react-router-dom'
 
 
 const CreateColor = () => {
+
+  const navigate = useNavigate()
 
     const { createData } = useData("/colors")
 
@@ -20,6 +23,7 @@ const CreateColor = () => {
         onSubmit: (values, action) => {
             console.log(values);
             createData(values)
+            navigate('/color-list')
         }
     });
 
