@@ -2,18 +2,13 @@ import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-<<<<<<< HEAD
-import {Menu, MenuItem } from '@mui/material';
-=======
-import { Button, Menu, MenuItem } from '@mui/material';
+import {Menu, MenuItem,Button } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
->>>>>>> 2a76c715eb2139363e34dd55cc9aef13ec7cbbfd
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { handelLogout } = useAuth()
-
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
