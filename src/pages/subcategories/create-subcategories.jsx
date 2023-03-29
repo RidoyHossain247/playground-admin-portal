@@ -5,8 +5,10 @@ import { useFormik } from 'formik';
 import { TextField, Button, Box, Typography, MenuItem, Select, FormControl } from '@mui/material';
 import * as yup from 'yup'
 import useData from '../../hooks/useData';
+import { useNavigate } from 'react-router-dom'
 
 const CreateSubcategories = () => {
+    const navigate = useNavigate()
 
     const { data, createData } = useData("/categories")
 
@@ -20,6 +22,7 @@ const CreateSubcategories = () => {
             console.log("values",values);
 
                 createData(values,"/subcategories" )
+                navigate('/subcategory-list')
         }
     });
 

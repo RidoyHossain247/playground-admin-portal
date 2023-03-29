@@ -19,7 +19,7 @@ import SizeAdd from './components/size/size-add';
 import SizeList from './components/size/size-list';
 import DashboardCard from './components/dashboard-card';
 import Account from './components/account';
-import Sbucategory from './pages/subcategories';
+
 import ColorAdd from "../src/pages/Color/create-color"
 import ColorList from './pages/Color/list-color';
 import SubcategoryList from './pages/subcategories/subcategories-list';
@@ -53,7 +53,6 @@ const PrivetRoute = () => {
         <Route path="/subcategory-list" element={<SubcategoryList />} />
         <Route path="/subcategory-add" element={<SubcategoryAdd />} />
 
-        <Route path="/subcategories" element={<Sbucategory />} />
         <Route path='*' element={<PageNotFound />} />
         <Route path='/size-add' element={<SizeAdd />} />
         <Route path='/size-list' element={<SizeList />} />
