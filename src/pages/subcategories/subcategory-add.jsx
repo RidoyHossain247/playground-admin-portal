@@ -7,7 +7,7 @@ import * as yup from 'yup'
 import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
 
-const CreateSubcategories = () => {
+const SubcategoriesAdd = () => {
     const navigate = useNavigate()
 
     const { data, createData } = useData("/categories")
@@ -71,5 +71,5 @@ const CreateSubcategories = () => {
     );
 };
 
-export default CreateSubcategories;
+export default SubcategoriesAdd;
 

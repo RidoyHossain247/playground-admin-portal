@@ -1,13 +1,8 @@
 
 import { useStoreState } from 'easy-peasy';
 import { Divider, Grid, Typography, Button, } from "@mui/material"
-
 import { Box, } from "@mui/system"
 import youserImage from "../../assets/Images/FB_IMG_1651283972600.jpg"
-
-
-
-
 
 const Account = () => {
 const AuthAvatarFirsrName= useStoreState(state=>state.auth.user.firstName);

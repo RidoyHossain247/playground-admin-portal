@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -41,33 +47,32 @@ function createData(name, calories, fat, carbs, protein) {
 
 
 
-const AddList = () => {
+const SizeList = () => {
 
-  const { data, deleteData } = useData("/categories")
-  console.log(data)
+  const { data, deleteData } = useData("/sizes")
 
   return (
     <Box>
       <Box textAlign="center" mb={2}>
-        <Typography fontSize={25} component="h3" color="primary">Category List</Typography>
+        <Typography fontSize={25} component="h3" color="primary">Size List</Typography>
       </Box>
 
       <TableContainer component={Paper}>
         <Table sx={{}} aria-label="customized table">
           <TableHead>
             <TableRow sx={{}}>
-              <StyledTableCell sx={{ p: "5px" }} >Category Image</StyledTableCell>
-              <StyledTableCell sx={{ p: "5px" }} >Category Name</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Sl NO</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Size Name</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row) => (
+            {data?.map((row, index) => (
               <StyledTableRow key={row.name}>
-                <img src={process.env.REACT_APP_IMAGE_URL + '/' + row.image} alt="img" width={100} />
+
+                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{index + 1}</StyledTableCell>
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
-                  <Button sx={{}}><RemoveRedEyeIcon color="secondary.light" /></Button>
                   <Button sx={{}}><EditIcon color="secondary.light" /></Button>
                   <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                 </StyledTableCell>
@@ -80,4 +85,4 @@ const AddList = () => {
   )
 }
 
-export default AddList
+export default SizeList

@@ -8,7 +8,7 @@ import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
 
 
-const CreateColor = () => {
+const ColorAdd = () => {
 
   const navigate = useNavigate()
 
@@ -53,4 +53,4 @@ const CreateColor = () => {
     );
 };
 
-export default CreateColor;
+export default ColorAdd;

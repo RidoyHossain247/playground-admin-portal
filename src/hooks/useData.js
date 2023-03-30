@@ -7,10 +7,8 @@ import api from "../service"
 
 const useData = (baseUrl) => {
     const [loading, setLoading] = useState(false)
-
     const dataState = useStoreState(state => state.data.data)
     const dataActions = useStoreActions(action => action.data)
-
 
     const fetchData = async (customUrl) => {
         try {
@@ -24,7 +22,6 @@ const useData = (baseUrl) => {
         }
     }
 
-
     const createData = async (inputData, customUrl = baseUrl, headers = {}) => {
         setLoading(true)
         try {
@@ -32,7 +29,6 @@ const useData = (baseUrl) => {
                 headers
             })
             const newArr = dataState[customUrl] ? dataState[customUrl].concat(data.data) : [data.data]
-
             dataActions.setData({
                 key: customUrl,
                 value: newArr
@@ -45,7 +41,6 @@ const useData = (baseUrl) => {
             setLoading(false)
         }
     }
-
 
     const deleteData = async (id, customUrl = baseUrl) => {
         console.log("url", `${customUrl} / ${id}`)
@@ -61,14 +56,11 @@ const useData = (baseUrl) => {
         }
     }
 
-
-
     useEffect(() => {
         if (!dataState[baseUrl]) {
             fetchData(baseUrl)
         }
     }, []);
-
 
     return {
         loading,

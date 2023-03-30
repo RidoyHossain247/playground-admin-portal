@@ -47,10 +47,10 @@ const SubcategoryList = () => {
     const { data, deleteData } = useData("/subcategories")
     const categories = useData("/categories")
 
-    const catData=categories.data
+    const catData = categories.data
 
-console.log("scat",data)
-console.log("cat",catData)
+    console.log("scat", data)
+    console.log("cat", catData)
 
     return (
         <Box>
@@ -71,9 +71,8 @@ console.log("cat",catData)
                         {data?.map((row) => (
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
-                                {catData.map(cat=> cat._id == row.category._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
+                                {catData.map(cat => cat._id == row.category._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}}><RemoveRedEyeIcon color="secondary.light" /></Button>
                                     <Button sx={{}}><EditIcon color="secondary.light" /></Button>
                                     <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>
