@@ -25,7 +25,7 @@ const SizeAdd = () => {
     return (
         <>
             <Box textAlign="center" mb={2}>
-                <Typography fontSize={25} component="h3" color="primary">Size</Typography>
+                <Typography fontSize={25} component="h3" color="primary">Size Add</Typography>
             </Box>
 
             <Formik   initialValues={initValues} onSubmit={handleSubmit}>

@@ -66,7 +66,6 @@ const ColorList = () => {
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}}><RemoveRedEyeIcon color="secondary.light" /></Button>
                                     <Button sx={{}}><EditIcon color="secondary.light" /></Button>
                                     <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>

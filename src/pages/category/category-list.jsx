@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -47,9 +41,9 @@ function createData(name, calories, fat, carbs, protein) {
 
 
 
-const SizeList = () => {
+const AddList = () => {
 
-  const { data, deleteData } = useData("/sizes")
+  const { data, deleteData } = useData("/categories")
   console.log(data)
 
   return (
@@ -62,19 +56,17 @@ const SizeList = () => {
         <Table sx={{}} aria-label="customized table">
           <TableHead>
             <TableRow sx={{}}>
-              <StyledTableCell sx={{ p: "5px" }} >Sl NO</StyledTableCell>
-              <StyledTableCell sx={{ p: "5px" }} >Size Name</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Category Image</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Category Name</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row,index) => (
+            {data?.map((row) => (
               <StyledTableRow key={row.name}>
-              
-                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{index + 1}</StyledTableCell>
+                <img src={process.env.REACT_APP_IMAGE_URL + '/' + row.image} alt="img" width={100} />
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
-                  <Button sx={{}}><RemoveRedEyeIcon color="secondary.light" /></Button>
                   <Button sx={{}}><EditIcon color="secondary.light" /></Button>
                   <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                 </StyledTableCell>
@@ -87,4 +79,4 @@ const SizeList = () => {
   )
 }
 
-export default SizeList
+export default AddList

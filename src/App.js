@@ -1,30 +1,30 @@
 
 import React from 'react';
+import { useStoreState } from 'easy-peasy';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/Home';
-import AboutPage from './pages/About';
-import List from './components/form-list/AddList';
-import Add from './components/form-list/AddForm';
+import HomePage from './pages/home';
+import AboutPage from './pages/about';
+import DashboardCard from './components/dashboard-card';
+import CategoryAdd from "./pages/category/category-add"
+import CategoryList from "./pages/category/category-list"
+import SubcategoryList from './pages/subcategories/subcategory-list';
+import SubcategoryAdd from './pages/subcategories/subcategory-add';
+import ColorAdd from "./pages/Color/color-add"
+import ColorList from './pages/Color/color-list';
+import SizeAdd from './pages/size/size-add';
+import SizeList from './pages/size/size-list';
+import Account from './components/account';
 import Layout from './components/layout';
-import store from './store';
-import { StoreProvider } from 'easy-peasy';
 import SignInPage from './pages/Auth/signin'
 import SignUpPage from './pages/Auth/signup'
 import ForgotPasswordPage from './pages/Auth/forgot-password'
 import VerifyEmailPage from './pages/Auth/verify-email'
 import ResetPasswordPage from './pages/Auth/reset-password';
 import PageNotFound from './pages/404';
-import { useStoreState } from 'easy-peasy';
-import SizeAdd from './components/size/size-add';
-import SizeList from './components/size/size-list';
-import DashboardCard from './components/dashboard-card';
-import Account from './components/account';
 
-import ColorAdd from "../src/pages/Color/create-color"
-import ColorList from './pages/Color/list-color';
-import SubcategoryList from './pages/subcategories/subcategories-list';
 
-import SubcategoryAdd from './pages/subcategories/create-subcategories';
+
+
 
 const PublicRoute = () => {
   return (
@@ -36,32 +36,26 @@ const PublicRoute = () => {
 }
 const PrivetRoute = () => {
   return (
-
     <Layout>
       <Routes>
         <Route path="/" element={<DashboardCard />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/add" element={<Add />} />
+        <Route path="/category/add" element={<CategoryAdd />} />
+        <Route path="/category/list" element={<CategoryList />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-      
-        <Route path="/color-add" element={<ColorAdd />} />
-        <Route path="/color-list" element={<ColorList />} />
-        <Route path="/subcategory-list" element={<SubcategoryList />} />
-        <Route path="/subcategory-add" element={<SubcategoryAdd />} />
-
+        <Route path="/color/add" element={<ColorAdd />} />
+        <Route path="/color/list" element={<ColorList />} />
+        <Route path="/subcategory/list" element={<SubcategoryList />} />
+        <Route path="/subcategory/add" element={<SubcategoryAdd />} />
         <Route path='*' element={<PageNotFound />} />
-        <Route path='/size-add' element={<SizeAdd />} />
-        <Route path='/size-list' element={<SizeList />} />
+        <Route path='/size/add' element={<SizeAdd />} />
+        <Route path='/size/list' element={<SizeList />} />
         <Route path='/account' element={<Account />} />
-     
-      
       </Routes>
     </Layout>
-
   )
 }
 
