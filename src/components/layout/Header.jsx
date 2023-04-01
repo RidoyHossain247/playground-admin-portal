@@ -14,7 +14,6 @@ const Header = () => {
 
 const AuthAvatar= useStoreState(state=>state.auth.user.firstName)
 
-console.log(AuthAvatar)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

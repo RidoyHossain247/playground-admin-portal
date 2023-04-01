@@ -18,7 +18,7 @@ const SizeAdd = () => {
       const response = await createData(values)
       if (response) {
         actions.resetForm()
-        navigate('/size-list')
+        navigate('/size/list')
       }
     }
 

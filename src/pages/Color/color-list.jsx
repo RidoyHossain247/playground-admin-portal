@@ -45,7 +45,6 @@ function createData(name, calories, fat, carbs, protein) {
 const ColorList = () => {
 
     const { data, deleteData } = useData("/colors")
-    console.log(data)
 
     return (
         <Box>
