@@ -48,10 +48,6 @@ const SubcategoryList = () => {
     const categories = useData("/categories")
 
     const catData = categories.data
-
-    console.log("scat", data)
-    console.log("cat", catData)
-
     return (
         <Box>
             <Box textAlign="center" mb={2}>

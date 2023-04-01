@@ -23,10 +23,10 @@ const AddForm = () => {
     const headers = {
       'Content-Type': 'multipart/form-data'
     }
-    const response = await createData(formData, null, headers)
+    const response = await createData(formData, '/categories', headers)
     if (response) {
       actions.resetForm()
-      navigate('/list')
+      navigate('/category/list')
     }
   }
 

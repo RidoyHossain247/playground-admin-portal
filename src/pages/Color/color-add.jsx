@@ -3,10 +3,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import * as yup from 'yup'
 import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
-
 
 const ColorAdd = () => {
 
@@ -23,8 +21,8 @@ const ColorAdd = () => {
         onSubmit: (values, action) => {
             console.log(values);
             createData(values)
-            navigate('/color-list')
-        }
+              navigate('/color/list')
+            },
     });
 
     const handleReset = () => {

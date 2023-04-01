@@ -14,6 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import useData from "../../hooks/useData"
+import {useNavigate} from "react-router-dom"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +47,8 @@ const AddList = () => {
   const { data, deleteData } = useData("/categories")
   console.log(data)
 
+  const navigate=useNavigate()
+
   return (
     <Box>
       <Box textAlign="center" mb={2}>
@@ -64,10 +67,10 @@ const AddList = () => {
           <TableBody>
             {data?.map((row) => (
               <StyledTableRow key={row.name}>
-                <img src={process.env.REACT_APP_IMAGE_URL + '/' + row.image} alt="img" width={100} />
+                <img src={row.image} alt="img" width={100} />
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
-                  <Button sx={{}}><EditIcon color="secondary.light" /></Button>
+                  <Button sx={{}} onClick={()=>navigate(`/category/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
                   <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                 </StyledTableCell>
               </StyledTableRow>

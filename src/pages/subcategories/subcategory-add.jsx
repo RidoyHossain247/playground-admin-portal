@@ -6,6 +6,7 @@ import { TextField, Button, Box, Typography, MenuItem, Select, FormControl } fro
 import * as yup from 'yup'
 import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
+import swal from 'sweetalert';
 
 const SubcategoriesAdd = () => {
     const navigate = useNavigate()
@@ -22,7 +23,7 @@ const SubcategoriesAdd = () => {
             console.log("values",values);
 
                 createData(values,"/subcategories" )
-                navigate('/subcategory-list')
+                navigate('/subcategory/list')
         }
     });
 
