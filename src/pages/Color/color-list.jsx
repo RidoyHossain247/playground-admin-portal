@@ -13,8 +13,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import swal from 'sweetalert';
 import useData from "../../hooks/useData"
+import { useNavigate } from 'react-router-dom';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,14 +38,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-
 
 const ColorList = () => {
-
+    const navigate = useNavigate()
+    
     const { data, deleteData } = useData("/colors")
 
     return (
@@ -65,8 +63,25 @@ const ColorList = () => {
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}}><EditIcon color="secondary.light" /></Button>
-                                    <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
+                                    <Button onClick={()=> navigate(`/color/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
+                                    <Button
+                                        onClick={() => {
+                                            swal({
+                                              title: "Are you sure?",
+                                              text: "Once deleted, you will not be able to recover this imaginary file!",
+                                              icon: "warning",
+                                              buttons: true,
+                                              dangerMode: true,
+                                            })
+                                            .then((willDelete) => {
+                                              if (willDelete) {
+                                                swal(
+                                                  deleteData(row._id),);
+                                              }
+                                              return
+                                            });
+                                          }}
+                                    ><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

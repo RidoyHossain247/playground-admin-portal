@@ -22,6 +22,8 @@ import VerifyEmailPage from './pages/auth/verify-email'
 import ResetPasswordPage from './pages/auth/reset-password';
 import PageNotFound from './pages/404';
 import CategoryEdit from './pages/category/category-edit';
+import UpdateColor from './pages/color/color-edit';
+import UpdateSubcategory from './pages/subcategories/subcategory-edit';
 
 
 
@@ -50,8 +52,10 @@ const PrivetRoute = () => {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/color/add" element={<ColorAdd />} />
         <Route path="/color/list" element={<ColorList />} />
-        <Route path="/subcategory/list" element={<SubcategoryList />} />
+        <Route path='/color/edit/:id' element={<UpdateColor/>}/>
         <Route path="/subcategory/add" element={<SubcategoryAdd />} />
+        <Route path="/subcategory/list" element={<SubcategoryList />} />
+        <Route path='/subcategory/edit/:id' element={<UpdateSubcategory/>}/>
         <Route path='*' element={<PageNotFound />} />
         <Route path='/size/add' element={<SizeAdd />} />
         <Route path='/size/list' element={<SizeList />} />
@@ -60,7 +64,6 @@ const PrivetRoute = () => {
     </Layout>
   )
 }
-
 
 function App() {
 

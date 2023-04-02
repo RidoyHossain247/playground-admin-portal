@@ -14,7 +14,6 @@ const CategoryEdit = () => {
 
     const { updateData, getDetail } = useData(`/categories`)
     const data = getDetail(`/categories/${params.id}`)
-    console.log('data123', data)
 
     const initValues = {
         name: data ? data.name : "",
@@ -23,6 +22,7 @@ const CategoryEdit = () => {
 
     const navigate = useNavigate()
 
+    
     const handleSubmit = async (values, actions) => {
         console.log('values=', values)
         var formData = new FormData();
@@ -42,7 +42,7 @@ const CategoryEdit = () => {
         <div>hello route {params.id}
             <Box>
                 <Box textAlign="center" mb={2}>
-                    <Typography fontSize={25} component="h3" color="primary">Category Add</Typography>
+                    <Typography fontSize={25} component="h3" color="primary">Update Category</Typography>
                 </Box>
 
                 <Formik
@@ -80,7 +80,7 @@ const CategoryEdit = () => {
 
 
                             <Box textAlign="end" mt={3}>
-                                <Button variant="contained" type='submit'>{formik.isSubmitting ? 'Loading...' : 'Submit'}</Button>
+                                <Button variant="contained" type='submit'>{formik.isSubmitting ? 'Loading...' : 'Update'}</Button>
                             </Box>
                         </Form>
                     )}

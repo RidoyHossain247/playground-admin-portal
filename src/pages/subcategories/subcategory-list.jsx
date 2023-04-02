@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useNavigate } from 'react-router-dom'
 import useData from "../../hooks/useData"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,18 +36,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-
 
 const SubcategoryList = () => {
-
     const { data, deleteData } = useData("/subcategories")
     const categories = useData("/categories")
-
     const catData = categories.data
+    const navigate =useNavigate()
+
+
     return (
         <Box>
             <Box textAlign="center" mb={2}>
@@ -65,11 +61,11 @@ const SubcategoryList = () => {
                     </TableHead>
                     <TableBody>
                         {data?.map((row) => (
-                            <StyledTableRow key={row.name}>
+                            <StyledTableRow key={row._id}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
-                                {catData.map(cat => cat._id == row.category._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
+                                {catData?.map(cat => cat._id == row.category?._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}}><EditIcon color="secondary.light" /></Button>
+                                    <Button sx={{}} onClick={()=>{navigate(`/subcategory/edit/${row._id}`)}}><EditIcon color="secondary.light" /></Button>
                                     <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>
                             </StyledTableRow>

@@ -1,38 +1,35 @@
-
-
+import { useParams } from "react-router-dom"
 import React from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
 
-const ColorAdd = () => {
+const UpdateColor=()=>{
+    const params=useParams()
+    const {getDetail,updateData}=useData("/colors")
+    const data = getDetail(`/colors/${params.id}`)
 
-  const navigate = useNavigate()
-
-    const { createData } = useData("/colors")
+const navigate =useNavigate()
 
     const initialValues = {
-        name: '',
+        name: data? data.name:'',
     };
 
-    const formik = useFormik({
+    const formik =useFormik({
         initialValues,
-        onSubmit: (values) => {
-            console.log(values);
-            createData(values)
-              navigate('/color/list')
-            },
-    });
+        onSubmit:(values,action)=>{
+            console.log(values)
+            updateData(values,`/colors/${params.id}`)
+            action.resetForm()
+            navigate('/color/list')
 
-    const handleReset = () => {
-        formik.resetForm();
-    };
-
-    return (
+        }
+    })
+    return(
         <Box>
             <Box textAlign="center" mb={2}>
-                <Typography fontSize={25} component="h3" color="primary">Add Color</Typography>
+                <Typography fontSize={25} component="h3" color="primary">Update Color</Typography>
             </Box>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
@@ -43,12 +40,10 @@ const ColorAdd = () => {
                     onChange={formik.handleChange}
                 />
                 <Box textAlign="end" mt={3}>
-                    <Button sx={{ mr: 1 }} variant="outlined" type="button" onClick={handleReset}>Reset</Button>
                     <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Submit"}</Button>
                 </Box>
             </form>
         </Box>
-    );
-};
-
-export default ColorAdd;
+    )
+}
+export default UpdateColor

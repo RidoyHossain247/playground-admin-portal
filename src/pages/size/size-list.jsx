@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -18,8 +12,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import useData from "../../hooks/useData"
+import swal from 'sweetalert';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,11 +34,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 
 
 const SizeList = () => {
@@ -74,7 +63,24 @@ const SizeList = () => {
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
                   <Button sx={{}}><EditIcon color="secondary.light" /></Button>
-                  <Button sx={{}} onClick={() => deleteData(row._id)}><DeleteIcon color="error" /></Button>
+                  <Button sx={{}} onClick={() =>{
+                    swal({
+                      title: "Are you sure?",
+                      text: "Once deleted, you will not be able to recover this imaginary file!",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                      if (willDelete) {
+                        swal(
+                          "Poof! Your imaginary file has been deleted!",
+                          deleteData(row._id), 
+                          {icon:[ "success",true]});
+                      }
+                      return
+                    });
+                  } }><DeleteIcon color="error" /></Button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -86,3 +92,4 @@ const SizeList = () => {
 }
 
 export default SizeList
+// deleteData(row._id)
