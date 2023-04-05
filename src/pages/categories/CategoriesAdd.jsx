@@ -4,26 +4,24 @@ import { Formik, Form } from 'formik'
 import useData from '../../hooks/useData'
 import { useNavigate } from 'react-router-dom'
 
+const CategoriesAdd = () => {
+  const initValues = {
+    name: '',
+    image: ''
+  }
 
-const initValues = {
-  name: '',
-  image: ''
-}
-
-const AddForm = () => {
-  const { createData, loading } = useData('/categories')
+  const { createData } = useData('/categories')
 
   const navigate = useNavigate()
 
   const handleSubmit = async (values, actions) => {
-    console.log('values=', values)
+
     const response = await createData(values)
     if (response) {
       actions.resetForm()
-      navigate('/list')
+      navigate('/categories/categories-list')
     }
   }
-
   return (
     <Box>
       <Box textAlign="center" mb={2}>
@@ -72,4 +70,4 @@ const AddForm = () => {
   )
 }
 
-export default AddForm
+export default CategoriesAdd

@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
-import AppBar from '@mui/material/AppBar';
+import React from 'react'
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
+import { useStoreActions,useStoreState } from 'easy-peasy'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,8 +15,14 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-
+  const navigate=useNavigate()
+  const authAction = useStoreActions((action) => action.auth)
+  const authName = useStoreState((state) => state.auth.user.firstName)
+  
+  const logoutHandle=()=>{
+    authAction.logout()
+    navigate("/")
+  }
   return (
     <Box>
       <Box display="flex" alignItems="center" sx={{ p: 0, cursor: "pointer" }} id="basic-button"
@@ -27,7 +30,7 @@ const Header = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}>
-        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>Avatar</Typography>
+        <Typography sx={{ fontSize: "16px", fontWeight: 700, mr: 1, color: "#3069EB" }}>{authName}</Typography>
         <Avatar src="/static/images/avatar/2.jpg" />
       </Box>
 
@@ -40,9 +43,9 @@ const Header = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem >Profile</MenuItem>
+        <MenuItem >My account</MenuItem>
+        <MenuItem onClick={logoutHandle}>Logout</MenuItem>
       </Menu>
     </Box>
   )

@@ -4,6 +4,8 @@ const DataModel = {
   setData: action((state, payload) => {
     state.data[payload.key] = payload.value;
   }),
+
+ 
 };
 
 export default DataModel;

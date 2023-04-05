@@ -1,15 +1,7 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import React from 'react'
+import { styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Box, Button, Typography } from '@mui/material';
+
+// icon
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -35,36 +27,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-
-
-const AddList = () => {
+const CategoriesList = () => {
 
   const { data, deleteData } = useData("/categories")
-  console.log(data)
-
   return (
     <Box>
       <Box textAlign="center" mb={2}>
         <Typography fontSize={25} component="h3" color="primary">Category List</Typography>
       </Box>
-
       <TableContainer component={Paper}>
         <Table sx={{}} aria-label="customized table">
           <TableHead>
             <TableRow sx={{}}>
+              <StyledTableCell sx={{ p: "5px" }} >CL NO</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} >Category Image</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} >Category Name</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row) => (
+            {data?.map((row,index) => (
               <StyledTableRow key={row.name}>
-                <img src={process.env.REACT_APP_IMAGE_URL + '/' + row.image} alt="img" width={100} />
+                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{index + 1}</StyledTableCell>
+                <img src={row.image} alt="img" width={100} />
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
                   <Button sx={{}}><RemoveRedEyeIcon color="secondary.light" /></Button>
@@ -80,4 +65,4 @@ const AddList = () => {
   )
 }
 
-export default AddList
+export default CategoriesList

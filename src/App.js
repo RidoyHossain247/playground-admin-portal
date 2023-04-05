@@ -1,29 +1,48 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/Home';
-import AboutPage from './pages/About';
-import List from './components/form-list/AddList';
-import Add from './components/form-list/AddForm';
+import CategoriesList from './pages/categories/CategoriesList';
+import CategoriesAdd from './pages/categories/CategoriesAdd';
+import Login from './pages/login';
+import Register from './pages/register';
 import Layout from './components/layout';
-import store from './store';
-import { StoreProvider } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy'
+import SizeList from "./pages/size/SizeList"
+import SizeAdd from "./pages/size/SizeAdd"
+import SizeEdit from "./pages/size/SizeEdit"
+
+const PublicRoute = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
+  )
+}
+
+
+const PrivateRoute = () => {
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/categories/categories-list" element={<CategoriesList />} />
+        <Route path="/categories/categories-add" element={<CategoriesAdd />} />
+        <Route path="/size/size-list" element={<SizeList/>} />
+        <Route path="/size/size-add" element={<SizeAdd/>} />
+        <Route path="/size/size-edit/:id" element={<SizeEdit/>} />
+      </Routes>
+    </Layout>
+  )
+}
 
 
 function App() {
+  const authState = useStoreState((state) => state.auth.isAuth)
+  const isAuth = authState;
+
   return (
-    <StoreProvider store={store}>
-      <Router>
-        <Layout>
-          <Routes>
-           
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/list" element={<List />} />
-            <Route path="/add" element={<Add />} />
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </StoreProvider>
+    <Router>
+      {isAuth ? <PrivateRoute /> : <PublicRoute />}
+    </Router>
   );
 }
 
