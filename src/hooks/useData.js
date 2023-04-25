@@ -42,7 +42,7 @@ const useData = (baseUrl) => {
             });
             return true
         } catch (error) {
-            console.log("error", error.response)
+            console.log("error", error.response.data.message)
             swal({
                 title: error.response?error.response.data.message:error.toString(),
                 icon: "warning",
@@ -83,9 +83,7 @@ const useData = (baseUrl) => {
             console.log("error", error.response)
             swal({
                 title: error.response?error.response.data.message:error.toString(),
-                icon: "warning",
-                buttons: ["ok",false],
-                
+                icon: "error",
             });
         }
     }
@@ -93,18 +91,27 @@ const useData = (baseUrl) => {
     const deleteData = async (id, customUrl = baseUrl) => {
         console.log("url", `${customUrl} / ${id}`)
         try {
-            await api.delete(`${customUrl}/${id}`)
-            
-            const newArr = dataState[customUrl].filter(item => item._id !== id)
+          const {data} =  await api.delete(`${customUrl}/${id}`)
+            console.log('log 01: ',dataState[customUrl].result)
+            const newArr = dataState[customUrl].result.filter(item => item._id !== id)
+            console.log('log 02: ', newArr)
+            swal({
+                title: data.message,
+                icon: "success",
+            });
             dataActions.setData({
                 key: customUrl,
-                value: newArr,
-               
+                value: {
+                    ...dataState[customUrl],
+                    result: newArr
+                },
             })
-            
         } catch (error) {
             console.log("error", error.toString())
-            
+            swal({
+                title: error.response?error.response.data.message:error.toString(),
+                icon: "error",
+            });
         }
     }
     
@@ -121,7 +128,7 @@ const useData = (baseUrl) => {
         
         const data = dataState[key]
         if(!data || data.length === 0) return null
-        const findData = data.filter(item => item._id === datId)
+        const findData = data?.filter(item => item._id === datId)
         if(findData.length === 0) return null;
         return findData[0];
     }

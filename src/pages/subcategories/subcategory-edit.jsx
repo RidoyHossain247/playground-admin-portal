@@ -14,8 +14,6 @@ const UpdateSubcategory=()=>{
     const {data}=useData("/categories")
 
     const scatData= getDetail(`/subcategories/${params.id}`)
-console.log('data',data)
-console.log('scat',scatData)
     const initialValues = {
         name: scatData? scatData.name:'',
         category: scatData? scatData.category._id:''

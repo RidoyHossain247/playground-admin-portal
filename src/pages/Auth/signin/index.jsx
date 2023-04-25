@@ -1,6 +1,5 @@
 
 import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
-import { useStoreActions } from "easy-peasy";
 import { useFormik } from "formik";
 import * as yup from 'yup'
 import useAuth from "../../../hooks/useAuth";
@@ -16,7 +15,7 @@ const SignInPage = () => {
 
     const personSchema = yup.object({
         email: yup.string().email().required("Please enter your email"),
-        password: yup.string().min(2).max(6).required("Please enter your password")
+        password: yup.string().min(2).max(10).required("Please enter your password")
     });
 
     const initialValues = {

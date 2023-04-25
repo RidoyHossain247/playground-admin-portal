@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+const token  = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDJiMmVlMTM4ZGE0ZmQ5YTQ0NzZmY2QiLCJmaXJzdE5hbWUiOiJTaWFtIiwibGFzdE5hbWUiOiJJc2FsYW0iLCJlbWFpbCI6InNpYW1AZ21haWwuY29tIiwic3RhdHVzIjoxLCJ0eXBlIjoxLCJpYXQiOjE2ODIyMzI1MTYsImV4cCI6MTY4MzUyODUxNn0.-n1U3JP69V9EbNheIwQpPV7SPsbetGwQCsqYjnYP2Fw`
+
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     timeout: 5000,
     headers: {
-        'Content-type': 'application/json',
-        Accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzM2OGY5ZTQ3NzVmODZkMmNlOTdkZTQiLCJmaXJzdE5hbWUiOiJNZCIsImxhc3ROYW1lIjoiUmFiYnkiLCJlbWFpbCI6InJhYmJ5QGdtYWlsLmNvbSIsInN0YXR1cyI6MSwidHlwZSI6MSwiaWF0IjoxNjc5NDY4MjcwLCJleHAiOjE2ODA3NjQyNzB9.WFyagy_ISnBrkH9k4Py9W6H76R056iASdHWwuw7FUMg',
+        'Content-type': 'application/json', 
+        // Accept: 'application/json',
+        Authorization: token,
     },
 });
 export default api;

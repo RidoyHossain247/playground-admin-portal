@@ -37,9 +37,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const SizeList = () => {
+const UserList = () => {
 const navigate=useNavigate()
-  const { data, deleteData } = useData("/sizes")
+  const { data, deleteData } = useData("/users")
+  console.log(data)
 
   return (
     <Box>
@@ -52,7 +53,8 @@ const navigate=useNavigate()
           <TableHead>
             <TableRow sx={{}}>
               <StyledTableCell sx={{ p: "5px" }} >Sl NO</StyledTableCell>
-              <StyledTableCell sx={{ p: "5px" }} >Size Name</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Name</StyledTableCell>
+              <StyledTableCell sx={{ p: "5px" }} >Email</StyledTableCell>
               <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -61,9 +63,10 @@ const navigate=useNavigate()
               <StyledTableRow key={row.name}>
 
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{index + 1}</StyledTableCell>
-                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
+                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.firstName} {row.lastName}</StyledTableCell>
+                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.email}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
-                  <Button sx={{}} onClick={()=>navigate(`/size/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
+                  <Button sx={{}} onClick={()=>navigate(`/user/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
                   <Button sx={{}} onClick={() =>{
                     swal({
                       title: "Are you sure?",
@@ -92,4 +95,4 @@ const navigate=useNavigate()
   )
 }
 
-export default SizeList
+export default UserList

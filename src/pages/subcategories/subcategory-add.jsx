@@ -1,12 +1,9 @@
 
-
 import React from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Box, Typography, MenuItem, Select, FormControl } from '@mui/material';
-import * as yup from 'yup'
 import useData from '../../hooks/useData';
 import { useNavigate } from 'react-router-dom'
-import swal from 'sweetalert';
 
 const SubcategoriesAdd = () => {
     const navigate = useNavigate()
@@ -56,7 +53,7 @@ const SubcategoriesAdd = () => {
                             name="category"
                         >
                             <MenuItem value="">
-                                <em>None</em>
+                                <em>Category</em>
                             </MenuItem>
                             {data && data.length !== 0 && data.map((item) =>
                                 <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>

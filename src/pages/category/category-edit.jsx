@@ -39,7 +39,7 @@ const CategoryEdit = () => {
     }
 
     return (
-        <div>hello route {params.id}
+        <div>
             <Box>
                 <Box textAlign="center" mb={2}>
                     <Typography fontSize={25} component="h3" color="primary">Update Category</Typography>

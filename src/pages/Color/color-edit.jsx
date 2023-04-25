@@ -40,7 +40,7 @@ const navigate =useNavigate()
                     onChange={formik.handleChange}
                 />
                 <Box textAlign="end" mt={3}>
-                    <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Submit"}</Button>
+                    <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Update"}</Button>
                 </Box>
             </form>
         </Box>
