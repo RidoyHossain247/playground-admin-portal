@@ -1,40 +1,40 @@
 
-import React from 'react';
 import { useStoreState } from 'easy-peasy';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AboutPage from './pages/about';
-import DashboardCard from './components/dashboard-card';
-import CategoryAdd from "./pages/category/category-add"
-import CategoryList from "./pages/category/category-list"
-import SubcategoryList from './pages/subcategories/subcategory-list';
-import SubcategoryAdd from './pages/subcategories/subcategory-add';
-import ColorAdd from "./pages/color/color-add"
-import ColorList from './pages/color/color-list';
-import SizeAdd from './pages/size/size-add';
-import SizeList from './pages/size/size-list';
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Account from './components/account';
+import DashboardCard from './components/dashboard-card';
 import Layout from './components/layout';
-import SignInPage from './pages/auth/signin'
-import SignUpPage from './pages/auth/signup'
-import ForgotPasswordPage from './pages/auth/forgot-password'
-import VerifyEmailPage from './pages/auth/verify-email'
-import ResetPasswordPage from './pages/auth/reset-password';
 import PageNotFound from './pages/404';
+import AboutPage from './pages/abouts';
+import ForgotPasswordPage from './pages/auth/forgot-password';
+import ResetPasswordPage from './pages/auth/reset-password';
+import SignInPage from './pages/auth/signin';
+import SignUpPage from './pages/auth/signup';
+import VerifyEmailPage from './pages/auth/verify-email';
+import CategoryAdd from "./pages/category/category-add";
 import CategoryEdit from './pages/category/category-edit';
+import CategoryList from "./pages/category/category-list";
+import ColorAdd from "./pages/color/color-add";
 import UpdateColor from './pages/color/color-edit';
-import UpdateSubcategory from './pages/subcategories/subcategory-edit';
-import UpdateSize from './pages/size/size-edit';
-import AddUser from './pages/user/user-add';
-import UserList from './pages/user/user-list';
-import UpdateUser from './pages/user/user-edit';
-import ProductAdd from './pages/product/product-add';
-import ProductList from './pages/product/product-list';
-import ReviewAdd from './pages/review/review-add';
-import ProductEdit from './pages/product/product-edit';
-import ReviewList from './pages/review/review-list';
+import ColorList from './pages/color/color-list';
 import AllOrders from './pages/orders/all-orders';
 import MyOrders from './pages/orders/my-orders';
+import ProductAdd from './pages/product/product-add';
+import ProductEdit from './pages/product/product-edit';
+import ProductList from './pages/product/product-list';
+import ReviewAdd from './pages/review/review-add';
 import ReviewEdit from './pages/review/review-edit';
+import ReviewList from './pages/review/review-list';
+import SizeAdd from './pages/size/size-add';
+import UpdateSize from './pages/size/size-edit';
+import SizeList from './pages/size/size-list';
+import SubcategoryAdd from './pages/subcategories/subcategory-add';
+import UpdateSubcategory from './pages/subcategories/subcategory-edit';
+import SubcategoryList from './pages/subcategories/subcategory-list';
+import AddUser from './pages/user/user-add';
+import UpdateUser from './pages/user/user-edit';
+import UserList from './pages/user/user-list';
 
 
 

@@ -1,7 +1,7 @@
-import jwtDecode from 'jwt-decode';
 import { useStoreActions } from "easy-peasy";
-import api from "../service"
-import { useNavigate } from "react-router-dom"
+import jwtDecode from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
+import api from "../service";
 
 
 const useAuth = () => {
@@ -21,8 +21,10 @@ const useAuth = () => {
                 user,
                 token
             });
+            return true;
         } catch (error) {
             console.log("error", error.response.data.message)
+            return false;
         }
     }
 

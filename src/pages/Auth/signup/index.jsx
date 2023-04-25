@@ -1,8 +1,8 @@
 
-import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
+import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from 'yup'
-import { useNavigate, Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from 'yup';
 import useAuth from "../../../hooks/useAuth";
 
 const SignUpPage = () => {
@@ -16,7 +16,7 @@ const SignUpPage = () => {
         firstName: yup.string().min(2).required("Please enter your first name"),
         lastName: yup.string().min(2).required("Please enter your last name"),
         email: yup.string().email().required("Please enter your email"),
-        password: yup.string().min(2).max(6).required("Please enter your password"),
+        password: yup.string().min(6).required("Please enter your password"),
         confirmPassword: yup.string().required().oneOf([yup.ref('password'), null], 'confirm passwords does not match'),
         contact: yup.number()
             .typeError("That doesn't look like a phone number")

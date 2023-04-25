@@ -1,35 +1,29 @@
 
-import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
+import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from 'yup'
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from 'yup';
 import useAuth from "../../../hooks/useAuth";
-import { useNavigate, Link } from "react-router-dom"
 
 const SignInPage = () => {
-
     const { handelLogin } = useAuth()
-
     const navigate = useNavigate()
-
-
 
     const personSchema = yup.object({
         email: yup.string().email().required("Please enter your email"),
-        password: yup.string().min(2).max(10).required("Please enter your password")
+        password: yup.string().min(6).required("Please enter your password")
     });
 
     const initialValues = {
-
         email: "",
         password: "",
-
     }
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
+        onSubmit:async (values, action) => {
             console.log("value", values)
-            handelLogin(values)
+           await handelLogin(values)
             action.resetForm()
             navigate("/")
         },
