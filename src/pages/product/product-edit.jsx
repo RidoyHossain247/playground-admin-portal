@@ -1,46 +1,49 @@
+
 import { Box, TextField, MenuItem, Select, Button, Typography } from "@mui/material"
 import useData from "../../hooks/useData"
 import { useFormik } from "formik"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
-const ProductAdd = () => {
-
-    const { createData } = useData("/products")
+const ProductEdit = () => {
+    
+    const params=useParams()
     const scatData = useData("/subcategories",)
     const sizeData = useData("/sizes")
     const colorData = useData("/colors")
+    const { updateData, getDetail } = useData(`/products`)
+    const data = getDetail(`/products/${params.id}`)
+console.log('data',data)
     const naviget = useNavigate()
 
     const initialValues = {
-        title: "",
-        description: "",
-        price: "",
-        discount: "",
-        subcategory: "",
-        colors: [],
-        sizes: [],
+        title: data?data.title:"",
+        description:data?data.description:"",
+        price: data?data.price:"",
+        discount:data?data.discount:"",
+        subcategory: data?data.title:"",
+        colors: data?data.colors._id:[],
+        sizes: data?data.sizes._id:[],
         image: ""
     }
 
     const { values, handleChange, handleSubmit, errors, touched, setFieldValue } = useFormik({
         initialValues,
-        onSubmit: async (values, action) => {
+        onSubmit:async (values, action) => {
             console.log('values', values)
-            let formData = new FormData()
+            var formData = new FormData()
             formData.append("title", values.title)
             formData.append("price", values.price)
             formData.append("description", values.description)
             formData.append("discount", values.discount)
             formData.append("subcategory", values.subcategory)
-            formData.append("sizes", JSON.stringify(values.sizes))
-            formData.append("colors", JSON.stringify(values.colors))
+            formData.append("sizes", values.sizes)
+            formData.append("colors", values.colors)
             formData.append("image", values.image)
             const headers = {
                 'Content-Type': 'multipart/form-data',
             }
-
-            const res = await createData(formData, "/products", headers)
-            naviget("/product/list")
+            updateData(formData,`/products/${params.id}`,headers)
+            // naviget("/product/list")
         }
     })
 
@@ -60,7 +63,7 @@ const ProductAdd = () => {
                         fontWeight: '600'
                     }}
                 >
-                    Product add
+                    Product add{params.id}
                 </Typography>
                 <Box
                     gap={3}
@@ -172,6 +175,7 @@ const ProductAdd = () => {
                         fullWidth
                         variant="outlined"
                         type="file"
+                        name="description"
                         onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
                         accept="image/*"
                     />
@@ -179,11 +183,11 @@ const ProductAdd = () => {
 
                 <Box gap={3} sx={{ textAlign: 'end' }}>
                     <Button variant="outlined">Reset</Button>
-                    <Button type="submit" variant="contained" sx={{ marginLeft: '30px' }} >Submit</Button>
+                    <Button type="submit" variant="contained" sx={{ marginLeft: '30px' }} >Update</Button>
                 </Box>
 
             </Box>
         </form>
     )
 }
-export default ProductAdd
+export default ProductEdit

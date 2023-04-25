@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import{ useEffect, useState } from 'react'
 import { useStoreState, useStoreActions } from "easy-peasy"
 import api from "../service"
 import swal from 'sweetalert';
-import { Button } from '@mui/material';
-import { Cancel } from '@mui/icons-material';
 
 
 // import axios from 'axios'
@@ -28,7 +26,7 @@ const useData = (baseUrl) => {
     
     const createData = async (inputData, customUrl = baseUrl, headers = {}) => {
         setLoading(true)
-        try {
+        try {   
             const { data } = await api.post(customUrl, inputData, {
                 headers
             })
@@ -39,13 +37,16 @@ const useData = (baseUrl) => {
                 value: newArr
             })
             swal({
-                title: "Created!",
-                text: data.message,
+                title: data.message,
                 icon: "success",
             });
             return true
         } catch (error) {
-            console.log("error", error.toString())
+            console.log("error", error.response.data.message)
+            swal({
+                title: error.response?error.response.data.message:error.toString(),
+                icon: "warning",
+            });
             return false;
         } finally {
             setLoading(false)
@@ -60,7 +61,7 @@ const useData = (baseUrl) => {
                 headers
             })
             console.log('update response', data)
-
+            
             const findData = dataState[baseUrl]
             const dataId = data.data._id
             const updatedData = findData.map(item => {
@@ -73,45 +74,44 @@ const useData = (baseUrl) => {
                 key: baseUrl,
                 value: updatedData
             })
-             swal({
-                title: "Updated!",
-                text: data.message,
+            swal({
+                title: data.message,
                 icon: "success",
             });
             return data;
         } catch (error) {
-            console.log("error", error.toString())
+            console.log("error", error.response)
+            swal({
+                title: error.response?error.response.data.message:error.toString(),
+                icon: "error",
+            });
         }
     }
     
     const deleteData = async (id, customUrl = baseUrl) => {
         console.log("url", `${customUrl} / ${id}`)
         try {
-            const {data} =  await api.delete(`${customUrl}/${id}`)
-            const newArr = dataState[customUrl].filter(item => item._id !== id)
-            console.log('sds',newArr)
+          const {data} =  await api.delete(`${customUrl}/${id}`)
+            console.log('log 01: ',dataState[customUrl].result)
+            const newArr = dataState[customUrl].result.filter(item => item._id !== id)
+            console.log('log 02: ', newArr)
+            swal({
+                title: data.message,
+                icon: "success",
+            });
             dataActions.setData({
                 key: customUrl,
-                value: newArr
+                value: {
+                    ...dataState[customUrl],
+                    result: newArr
+                },
             })
-            swal({
-                title: "Are you sure?",
-                text: data.message,
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                buttons:Cancel[false]
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Poof! Your imaginary file has been deleted!", {
-                        icon: "success",
-                    });
-                } 
-                return
-            });
         } catch (error) {
             console.log("error", error.toString())
+            swal({
+                title: error.response?error.response.data.message:error.toString(),
+                icon: "error",
+            });
         }
     }
     
@@ -121,14 +121,14 @@ const useData = (baseUrl) => {
         url = url.split('/')
         const key = `/${url[1]}`
         const datId = url[2]
-
+        
         // const key = '/categories/20'
         // const dataId = 20
-
-
+        
+        
         const data = dataState[key]
         if(!data || data.length === 0) return null
-        const findData = data.filter(item => item._id === datId)
+        const findData = data?.filter(item => item._id === datId)
         if(findData.length === 0) return null;
         return findData[0];
     }
@@ -138,7 +138,6 @@ const useData = (baseUrl) => {
             fetchData(baseUrl)
         }
     }, []);
-    
     return {
         loading,
         data: dataState[baseUrl],

@@ -1,14 +1,28 @@
 import React from 'react'
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { Formik, Form } from 'formik'
+import { Formik, Form, ErrorMessage } from 'formik'
 import useData from '../../hooks/useData'
 import { useNavigate } from 'react-router-dom'
-
+import * as Yup from "yup"
 
 const initValues = {
   name: '',
   image: ''
 }
+
+const validation=Yup.object().shape({
+  name: Yup.string()
+  .min(3).max(20)
+    .required('Name is required'),
+  image: Yup.mixed()
+    .required('Image is required')
+    // .test('fileSize', 'Image must be less than 1MB', (value) => {
+    //   return value && value.size <= 1000000;
+    // })
+    .test('fileType', 'Only JPG and PNG files are allowed', (value) => {
+      return value && ['image/jpeg', 'image/png'].includes(value.type);
+    })
+});
 
 const AddForm = () => {
   const { createData, loading } = useData('/categories')
@@ -39,6 +53,7 @@ const AddForm = () => {
       <Formik
         initialValues={initValues}
         onSubmit={handleSubmit}
+        validationSchema={validation}
       >
         {(formik) => (
           <Form>
@@ -52,6 +67,8 @@ const AddForm = () => {
               name='name'
               value={formik.values.name}
               onChange={formik.handleChange}
+              error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.errors.name && formik.touched.name&& formik.errors.name}
             />
             <TextField
               type='file'
@@ -65,6 +82,8 @@ const AddForm = () => {
               variant="outlined"
               sx={{ my: 1 }}
               accept='image/*'
+              error={formik.errors.image && formik.touched.image && Boolean(formik.errors.image)}
+              helperText={formik.errors.image && formik.touched.image&& formik.errors.image}
             />
 
             <Box textAlign="end" mt={3}>

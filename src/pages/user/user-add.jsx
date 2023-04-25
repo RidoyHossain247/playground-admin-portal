@@ -3,9 +3,9 @@ import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
 import { useFormik } from "formik";
 import * as yup from 'yup'
 import { useNavigate, Link } from "react-router-dom"
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
-const SignUpPage = () => {
+const AddUser = () => {
     const { HandelRegistration } = useAuth()
 
     const navigate = useNavigate()
@@ -39,9 +39,9 @@ const SignUpPage = () => {
         initialValues,
         onSubmit: (values, action) => {
             console.log("value", values)
-            HandelRegistration("/auth/register",values)
-            action.resetForm()
-            navigate("/")
+            HandelRegistration("/users",values)
+            // action.resetForm()
+            navigate("/user/list")
         },
         validationSchema: personSchema
 
@@ -50,22 +50,15 @@ const SignUpPage = () => {
 
     return (
         <Box
-            display={'flex'}
-            maxWidth={400}
-            padding={10}
+            maxWidth={800}
             margin={'auto'}
-            alignItems='center'
             marginTop={5}
             flexDirection={"column"}
-            boxShadow={'5px 5px 12px #ccc'}
-            sx={{
-                ":hover": {
-                    boxShadow: '10px 10px 20px #ccc'
-                }
-            }}
+           
         >
             <Typography
                 sx={{
+                    textAlign:"center",
                     mb: 3,
                     fontSize: 26,
                     fontWeight: 'bold'
@@ -170,21 +163,11 @@ const SignUpPage = () => {
                         }
                     }}
                 >
-                    SignUp
+                    Submit
                 </Button>
             </form>
-            <Box
-                style={{ display: 'flex', marginRight: "auto" }}
-            >
-                <Typography sx={{ mr: 2, }}>Already have an account?</Typography>
-                <Link to="/"
-                    style={{
-                        textDecoration: "none",
-                        color: '#3C1FF4',
-                    }}>Sign In</Link>
-            </Box>
         </Box>
     )
 }
 
-export default SignUpPage
+export default AddUser

@@ -13,9 +13,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom'
-import useData from "../../hooks/useData"
 import swal from 'sweetalert';
+import useData from "../../hooks/useData"
+import { useNavigate } from 'react-router-dom';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,36 +39,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const SubcategoryList = () => {
-    const { data, deleteData } = useData("/subcategories")
-    const categories = useData("/categories")
-    const catData = categories.data
-    const navigate =useNavigate()
+const AllOrder = () => {
+    const navigate = useNavigate()
 
-
+    const { data, deleteData } = useData("/orders")
+    
+    
     return (
         <Box>
             <Box textAlign="center" mb={2}>
-                <Typography fontSize={25} component="h3" color="primary">Sub Categories List</Typography>
+                <Typography fontSize={25} component="h3" color="primary">Order List</Typography>
             </Box>
 
             <TableContainer component={Paper}>
                 <Table sx={{}} aria-label="customized table">
                     <TableHead>
                         <TableRow sx={{}}>
-                            <StyledTableCell sx={{ p: "5px" }} >Sub Category Name</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Category Name</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >#</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Order Id</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Order Items</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Order Amount</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Order Status</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Data&tTime</StyledTableCell>
                             <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((row) => (
+                        {data.result?.map((row) => (
                             <StyledTableRow key={row._id}>
-                                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
-                                {catData?.map(cat => cat._id == row.category?._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
+                                <img src={row.image} alt="img" width={100} />
+                                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.title}</StyledTableCell>
+                                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.price}</StyledTableCell>
+                                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.discount}</StyledTableCell>
+                               
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}} onClick={()=>{navigate(`/subcategory/edit/${row._id}`)}}><EditIcon color="secondary.light" /></Button>
-                                    <Button sx={{}} onClick={() =>  {
+                                    <Button onClick={() => navigate(`/product/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
+                                    <Button
+                                        onClick={() => {
                                             swal({
                                               title: "Are you sure?",
                                               text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -82,7 +90,8 @@ const SubcategoryList = () => {
                                               }
                                               return
                                             });
-                                          }}><DeleteIcon color="error" /></Button>
+                                          }}
+                                    ><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}
@@ -93,4 +102,4 @@ const SubcategoryList = () => {
     )
 }
 
-export default SubcategoryList
+export default AllOrder

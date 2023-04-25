@@ -18,7 +18,7 @@ const ColorAdd = () => {
 
     const formik = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
+        onSubmit: (values) => {
             console.log(values);
             createData(values)
               navigate('/color/list')

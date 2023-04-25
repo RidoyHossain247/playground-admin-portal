@@ -36,12 +36,12 @@ const useAuth = () => {
     // Handel registration
 
 
-    const HandelRegistration = async (values) => {
+    const HandelRegistration = async (customUrl,values) => {
         try {
-            const res = await api.post("/auth/register", values)
+            const res = await api.post(customUrl,values)
             console.log("res", res)
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error.response.data.message)
         }
     }
 
