@@ -18,11 +18,13 @@ const UpdateSize = () => {
 
     const formik =useFormik({
         initialValues,
-        onSubmit:(values,action)=>{
+        onSubmit:async(values,action)=>{
             console.log(values)
-            updateData(values,`/sizes/${params.id}`)
+           const res = await updateData(values,`/sizes/${params.id}`)
+           if (res) {
             action.resetForm()
-            navigate('/size/list')
+            navigate("/size/list")
+        }
 
         }
     })

@@ -1,21 +1,21 @@
 
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom'
-import useData from "../../hooks/useData"
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import useData from "../../hooks/useData";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,9 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const SubcategoryList = () => {
     const { data, deleteData } = useData("/subcategories")
-    const categories = useData("/categories")
-    const catData = categories.data
-    const navigate =useNavigate()
+    const navigate = useNavigate()
 
 
     return (
@@ -61,28 +59,28 @@ const SubcategoryList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((row) => (
+                        {data?.data.map((row) => (
                             <StyledTableRow key={row._id}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
-                                {catData?.map(cat => cat._id == row.category?._id && <StyledTableCell key={cat._id}>{cat.name}</StyledTableCell>)}
+                                <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row?.category?.name}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}} onClick={()=>{navigate(`/subcategory/edit/${row._id}`)}}><EditIcon color="secondary.light" /></Button>
-                                    <Button sx={{}} onClick={() =>  {
-                                            swal({
-                                              title: "Are you sure?",
-                                              text: "Once deleted, you will not be able to recover this imaginary file!",
-                                              icon: "warning",
-                                              buttons: true,
-                                              dangerMode: true,
-                                            })
+                                    <Button sx={{}} onClick={() => { navigate(`/subcategory/edit/${row._id}`) }}><EditIcon color="secondary.light" /></Button>
+                                    <Button sx={{}} onClick={() => {
+                                        swal({
+                                            title: "Are you sure?",
+                                            text: "Once deleted, you will not be able to recover this imaginary file!",
+                                            icon: "warning",
+                                            buttons: true,
+                                            dangerMode: true,
+                                        })
                                             .then((willDelete) => {
-                                              if (willDelete) {
-                                                swal(
-                                                  deleteData(row._id),);
-                                              }
-                                              return
+                                                if (willDelete) {
+                                                    swal(
+                                                        deleteData(row._id),);
+                                                }
+                                                return
                                             });
-                                          }}><DeleteIcon color="error" /></Button>
+                                    }}><DeleteIcon color="error" /></Button>
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

@@ -1,22 +1,20 @@
-import { Box, Typography, Button, TextField } from "@mui/material"
+import { Box, Button, TextField, Typography } from "@mui/material";
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select'; import { useStoreState } from "easy-peasy"
-import useData from "../../hooks/useData";
-import { useFormik, validateYupSchema } from "formik";
+import Select from '@mui/material/Select';
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import useData from "../../hooks/useData";
 
 const ReviewAdd = () => {
-
     const { createData } = useData('/reviews')
-    const product = useData('/products')
-    const authData = useData('/users')
-
+    const { data: product } = useData('/products')
+    const { data: authData } = useData('/users')
     const userData = authData.data
-    const pdtData = product.data?.result
+    const pdtData = product.data
 
-    const Naviget=useNavigate()
+    const navigaet = useNavigate()
 
     const initialValues = {
         product: "",
@@ -26,14 +24,15 @@ const ReviewAdd = () => {
     }
     const { values, handleChange, handleSubmit, touched, errors } = useFormik({
         initialValues,
-       
-        onSubmit: (values, action) => {
+        onSubmit: async (values, action) => {
             console.log("values", values)
-            createData(values, '/reviews',)
-            Naviget('/review/list')
+            const res = await createData(values, '/reviews',)
+            if (res) {
+                action.resetForm()
+                navigaet("/review/list")
+            }
         }
     })
-
 
     return (
 
@@ -74,7 +73,7 @@ const ReviewAdd = () => {
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
-                            {pdtData && pdtData.length !== 0 && pdtData.map((item) =>
+                            {pdtData && pdtData.length !== 0 && pdtData?.map((item) =>
                                 <MenuItem key={item._id} value={item._id}>{item.title}</MenuItem>
                             )}
                         </Select>

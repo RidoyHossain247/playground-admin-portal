@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import useData from "../../hooks/useData"
-import swal from 'sweetalert';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+import useData from "../../hooks/useData";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,7 +38,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const UserList = () => {
-const navigate=useNavigate()
+  const navigate = useNavigate()
   const { data, deleteData } = useData("/users")
   console.log(data)
 
@@ -59,15 +59,15 @@ const navigate=useNavigate()
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row, index) => (
+            {data?.data?.map((row, index) => (
               <StyledTableRow key={row.name}>
 
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{index + 1}</StyledTableCell>
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.firstName} {row.lastName}</StyledTableCell>
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.email}</StyledTableCell>
                 <StyledTableCell sx={{ p: 0 }} align="right">
-                  <Button sx={{}} onClick={()=>navigate(`/user/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
-                  <Button sx={{}} onClick={() =>{
+                  <Button sx={{}} onClick={() => navigate(`/user/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
+                  <Button sx={{}} onClick={() => {
                     swal({
                       title: "Are you sure?",
                       text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -75,16 +75,16 @@ const navigate=useNavigate()
                       buttons: true,
                       dangerMode: true,
                     })
-                    .then((willDelete) => {
-                      if (willDelete) {
-                        swal(
-                          "Poof! Your imaginary file has been deleted!",
-                          deleteData(row._id), 
-                          {icon:[ "success",true]});
-                      }
-                      return
-                    });
-                  } }><DeleteIcon color="error" /></Button>
+                      .then((willDelete) => {
+                        if (willDelete) {
+                          swal(
+                            "Poof! Your imaginary file has been deleted!",
+                            deleteData(row._id),
+                            { icon: ["success", true] });
+                        }
+                        return
+                      });
+                  }}><DeleteIcon color="error" /></Button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

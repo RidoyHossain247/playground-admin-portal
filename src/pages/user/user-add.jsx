@@ -1,12 +1,12 @@
 
-import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
+import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from 'yup'
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import * as yup from 'yup';
 import useAuth from "../../hooks/useAuth";
 
 const AddUser = () => {
-    const { HandelRegistration } = useAuth()
+    const { handelRegistration } = useAuth()
 
     const navigate = useNavigate()
 
@@ -37,11 +37,13 @@ const AddUser = () => {
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
+        onSubmit: async (values, action) => {
             console.log("value", values)
-            HandelRegistration("/users",values)
-            // action.resetForm()
-            navigate("/user/list")
+            const res = await handelRegistration("/users", values)
+            if (res) {
+                action.resetForm()
+                navigate("/user/list")
+            }
         },
         validationSchema: personSchema
 
@@ -54,11 +56,11 @@ const AddUser = () => {
             margin={'auto'}
             marginTop={5}
             flexDirection={"column"}
-           
+
         >
             <Typography
                 sx={{
-                    textAlign:"center",
+                    textAlign: "center",
                     mb: 3,
                     fontSize: 26,
                     fontWeight: 'bold'

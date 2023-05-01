@@ -1,60 +1,47 @@
-import { Divider, Typography, } from '@mui/material'
-import { Box } from '@mui/system'
-import React from 'react'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import { AppBar, Divider, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useLocation } from 'react-router-dom';
+
+import React, { useEffect, useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 import Accroding from '../accrodion';
+import menu from './menu.json';
 
 
 const Sidebar = () => {
+  const location = useLocation();
+  const [pathname, setPathname] = useState('')
+
+  const { authUser } = useAuth()
+
+
+  useEffect(() => {
+    setPathname(location.pathname)
+  }, [location.pathname]);
 
 
   return (
-    <>
-      <Box sx={{ padding: '10px', color: 'white' }}>
-        <Box sx={{ display: "flex", alignItems: 'center' }}>
-          <InsertEmoticonIcon sx={{ color: 'white', fontSize: '50px' }} />
-          <Typography sx={{ fontSize: '25px', fontWeight: '600', paddingLeft: '10px' }}>
-            Admin nmae
-          </Typography>
-        </Box>
-        <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
+    <Grid xs={2}>
+      <AppBar position="static" color="inherit" sx={{ height: "100vh" }}>
 
-        <Box sx={{ display: "flex", alignItems: 'center' }}>
-          <InsertEmoticonIcon sx={{ color: 'white', fontSize: '23px' }} />
-          <Typography sx={{ fontSize: '18px', fontWeight: '600', paddingLeft: '10px' }}>
-            Admin nmae
-          </Typography>
-        </Box>
-        <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
+        <Box bgcolor='#cfb572' sx={{ height: '100vh', "@media (max-width:600px)": { display: '' } }}>
 
-        <Box sx={{}}>
-          <Accroding Category="Category 1" CategoryAdd="Category Add" CategoryList="Category List" />
-          <Accroding Category="Category 1" CategoryAdd="Category Add" CategoryList="Category List" />
+          <Box sx={{ padding: '10px', color: 'white' }}>
+            <Box sx={{ display: "flex", alignItems: 'center' }}>
+              <InsertEmoticonIcon sx={{ color: 'white', fontSize: '50px' }} />
+              <Typography sx={{ fontSize: '25px', fontWeight: '600', paddingLeft: '10px' }}>
+                {authUser.firstName}
+              </Typography>
+            </Box>
+            <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
+            <Box sx={{}}>
+              {menu.map(element => <Accroding key={element.id} {...element} pathname={pathname} handleActiveMenu={setPathname} />)}
+            </Box>
+          </Box>
         </Box>
-        <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
-        <Typography sx={{ fontSize: '18px', fontWeight: '600', paddingLeft: '10px' }}>
-          Admin nmae
-        </Typography>
-        <Box sx={{}}>
-          <Accroding Category="Category 1" CategoryAdd="Category Add" CategoryList="Category List" />
-        </Box>
-        <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
-
-        <Box sx={{ display: "flex", alignItems: 'center' }}>
-          <InsertEmoticonIcon sx={{ color: 'white', fontSize: '23px' }} />
-          <Typography sx={{ fontWeight: '600', paddingLeft: '10px' }}>
-            Charts
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", alignItems: 'center', paddingTop: "20PX" }}>
-          <InsertEmoticonIcon sx={{ color: 'white', fontSize: '23px' }} />
-          <Typography sx={{ fontWeight: '600', paddingLeft: '10px' }}>
-            Charts
-          </Typography>
-        </Box>
-        <Divider sx={{ bgcolor: 'white', margin: '20px 0' }} />
-      </Box>
-    </>
+      </AppBar>
+    </Grid>
   )
 }
 

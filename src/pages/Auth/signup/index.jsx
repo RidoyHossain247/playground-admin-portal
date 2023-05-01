@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import useAuth from "../../../hooks/useAuth";
 
 const SignUpPage = () => {
-    const { HandelRegistration } = useAuth()
+    const { handelRegistration } = useAuth()
 
     const navigate = useNavigate()
 
@@ -37,11 +37,13 @@ const SignUpPage = () => {
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
+        onSubmit: async (values, action) => {
             console.log("value", values)
-            HandelRegistration("/auth/register",values)
-            action.resetForm()
-            navigate("/")
+            const res = await handelRegistration("/auth/register", values)
+            if (res) {
+                action.resetForm()
+                navigate("/")
+            }
         },
         validationSchema: personSchema
 

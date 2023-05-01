@@ -34,10 +34,12 @@ const UpdateUser = () => {
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
-            updateData(values, `/users/${params.id}`)
-            action.resetForm()
-            navigate("/user/list")
+        onSubmit: async (values, action) => {
+            const res = await updateData(values, `/users/${params.id}`)
+            if (res) {
+                action.resetForm()
+                navigate("/user/list")
+            }
         },
         validationSchema: personSchema
 

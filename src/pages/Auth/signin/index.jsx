@@ -21,14 +21,16 @@ const SignInPage = () => {
 
     const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
         initialValues,
-        onSubmit:async (values, action) => {
+        onSubmit: async (values, action) => {
             console.log("value", values)
-           await handelLogin(values)
+           const res= await handelLogin(values)
+           if(res){
             action.resetForm()
             navigate("/")
+        }
         },
+        
         validationSchema: personSchema
-
     })
 
 

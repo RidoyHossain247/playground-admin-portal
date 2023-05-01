@@ -1,26 +1,27 @@
 
-import React from 'react';
+import { Box, Button, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { TextField, Button, Box, Typography, MenuItem, Select, FormControl } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useData from '../../hooks/useData';
-import { useNavigate } from 'react-router-dom'
 
 const SubcategoriesAdd = () => {
     const navigate = useNavigate()
 
-    const { data, createData } = useData("/categories")
-
+    const { data: catData, createData } = useData("/categories")
     const initialValues = {
         name: '',
         category: ''
     };
     const formik = useFormik({
         initialValues,
-        onSubmit: (values, action) => {
-            console.log("values",values);
-
-                createData(values,"/subcategories" )
-                navigate('/subcategory/list')
+        onSubmit: async (values, action) => {
+            console.log("values", values);
+            const res = await createData(values, "/subcategories")
+            if (res) {
+                action.resetForm()
+                navigate("/subcategory/list")
+            }
         }
     });
 
@@ -45,20 +46,20 @@ const SubcategoriesAdd = () => {
 
                 </Box>
                 <Box >
-                        <Select
+                    <Select
                         fullWidth
-                            displayEmpty
-                            value={formik.values.category}
-                            onChange={formik.handleChange}
-                            name="category"
-                        >
-                            <MenuItem value="">
-                                <em>Category</em>
-                            </MenuItem>
-                            {data && data.length !== 0 && data.map((item) =>
-                                <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
-                            )}
-                        </Select>
+                        displayEmpty
+                        value={formik.values.category}
+                        onChange={formik.handleChange}
+                        name="category"
+                    >
+                        <MenuItem value="">
+                            <em>Category</em>
+                        </MenuItem>
+                        {catData?.data && catData.data.length !== 0 && catData.data.map((item) =>
+                            <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
+                        )}
+                    </Select>
                 </Box>
                 <Box textAlign="end" mt={3}>
                     <Button sx={{ mr: 1 }} variant="outlined" type="button" onClick={handleReset}>Reset</Button>
