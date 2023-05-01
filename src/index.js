@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import App from './app';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { StoreProvider } from 'easy-peasy'
+import { StoreProvider } from 'easy-peasy';
 
+import { setAuthToken } from './service';
 import Store from './store';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+const authToken = localStorage.getItem('authToken')
+if (authToken) {
+  setAuthToken(authToken)
+}
+
+
 root.render(
   <React.StrictMode>
     <StoreProvider store={Store}>

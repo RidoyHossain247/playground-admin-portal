@@ -1,14 +1,14 @@
-import { Box, TextField, MenuItem, Select, Button, Typography } from "@mui/material"
-import useData from "../../hooks/useData"
+import { Box, Button, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
+import useData from "../../hooks/useData"
 
 const ProductAdd = () => {
 
     const { createData } = useData("/products")
-    const scatData = useData("/subcategories",)
-    const sizeData = useData("/sizes")
-    const colorData = useData("/colors")
+    const { data: scatData } = useData("/subcategories",)
+    const { data: sizeData } = useData("/sizes")
+    const { data: colorData } = useData("/colors")
     const naviget = useNavigate()
 
     const initialValues = {
@@ -40,7 +40,10 @@ const ProductAdd = () => {
             }
 
             const res = await createData(formData, "/products", headers)
-            naviget("/product/list")
+            if (res) {
+                action.resetForm()
+                naviget("/product/list")
+            }
         }
     })
 
@@ -110,12 +113,12 @@ const ProductAdd = () => {
                         value={values.subcategory}
                         onChange={handleChange}
                         name="subcategory"
-                        label="subcategory"
+                    // label="Subcategory"
                     >
                         <MenuItem value="">
                             <em>Subcategory</em>
                         </MenuItem>
-                        {scatData.data && scatData.data.length !== 0 && scatData.data.map((item) =>
+                        {scatData?.data && scatData.data.length !== 0 && scatData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
@@ -136,7 +139,7 @@ const ProductAdd = () => {
                         <MenuItem value="">
                             <em>Colors</em>
                         </MenuItem>
-                        {colorData.data && colorData.data.length !== 0 && colorData.data.map((item) =>
+                        {colorData?.data && colorData.data.length !== 0 && colorData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
@@ -150,7 +153,7 @@ const ProductAdd = () => {
                         <MenuItem value="">
                             <em>Sizes</em>
                         </MenuItem>
-                        {sizeData.data && sizeData.data.length !== 0 && sizeData.data.map((item) =>
+                        {sizeData?.data && sizeData.data.length !== 0 && sizeData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>

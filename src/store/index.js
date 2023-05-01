@@ -1,4 +1,4 @@
-import { createStore, persist } from "easy-peasy"
+import { createStore, persist } from "easy-peasy";
 import AuthModel from "./modal/auth-model";
 import DataModel from "./modal/data-model";
 

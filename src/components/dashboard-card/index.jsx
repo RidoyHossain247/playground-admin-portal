@@ -24,7 +24,6 @@ const DashboardCard = () => {
                     </Box>
                 </Grid>
                 </Grid>
-
             </Box>
         </>
     )

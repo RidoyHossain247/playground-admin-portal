@@ -1,58 +1,70 @@
-import{ useEffect, useState } from 'react'
-import { useStoreState, useStoreActions } from "easy-peasy"
-import api from "../service"
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import swal from 'sweetalert';
-
-
+import api from "../service";
 // import axios from 'axios'
 
 
-const useData = (baseUrl) => {
+const useData = (baseUrl = '/') => {
     const [loading, setLoading] = useState(false)
     const dataState = useStoreState(state => state.data.data)
     const dataActions = useStoreActions(action => action.data)
-    
+
+    const clearData = () => {
+        dataActions.clearData()
+    }
+
     const fetchData = async (customUrl) => {
         try {
             const response = await api.get(customUrl)
             dataActions.setData({
                 key: customUrl,
-                value: response.data.data
+                value: response.data.payload
             })
         } catch (error) {
-            console.log("error", error.toString())
+            toast.error(error?.response?.data?.message ?? error.message)
         }
     }
-    
+
     const createData = async (inputData, customUrl = baseUrl, headers = {}) => {
         setLoading(true)
-        try {   
+        try {
             const { data } = await api.post(customUrl, inputData, {
                 headers
             })
-            
-            const newArr = dataState[customUrl] ? dataState[customUrl].concat(data.data) : [data.data]
+
+            let stateObj = {}
+            if (dataState[customUrl]) {
+                const arr = dataState[customUrl].data
+                arr.unshift(data.payload)
+                console.log('s', dataState[customUrl])
+                stateObj = {
+                    ...dataState[customUrl],
+                    data: arr
+                }
+            } else {
+                stateObj = {
+                    data: [data.payload],
+                    totalDocument: 1,
+                    totalPages: 1,
+                    currentPage: 1
+                }
+            }
             dataActions.setData({
                 key: customUrl,
-                value: newArr
+                value: stateObj
             })
-            swal({
-                title: data.message,
-                icon: "success",
-            });
+            toast.success(data.message)
             return true
         } catch (error) {
-            console.log("error", error.response.data.message)
-            swal({
-                title: error.response?error.response.data.message:error.toString(),
-                icon: "warning",
-            });
+            toast.error(error?.response?.data?.message ?? error.message)
             return false;
         } finally {
             setLoading(false)
         }
     }
-    
+
     // Update Data
     const updateData = async (inputData, customUrl, headers = {}) => {
         setLoading(true)
@@ -60,41 +72,35 @@ const useData = (baseUrl) => {
             const { data } = await api.put(customUrl, inputData, {
                 headers
             })
-            console.log('update response', data)
-            
-            const findData = dataState[baseUrl]
-            const dataId = data.data._id
-            const updatedData = findData.map(item => {
-                if(item._id === dataId){
-                    item = data.data
+            const dataId = data.payload._id
+            const oldData = dataState[baseUrl]
+            const updatedData = oldData.data.map(item => {
+                if (item._id === dataId) {
+                    item = data.payload
                 }
                 return item;
             })
+            oldData.data = updatedData
             dataActions.setData({
                 key: baseUrl,
-                value: updatedData
+                value: {
+                    ...oldData,
+                    data: updatedData
+                }
             })
-            swal({
-                title: data.message,
-                icon: "success",
-            });
+            toast.success(data.message)
             return data;
         } catch (error) {
-            console.log("error", error.response)
-            swal({
-                title: error.response?error.response.data.message:error.toString(),
-                icon: "error",
-            });
+            toast.error(error?.response?.data?.message ?? error.message)
+
         }
     }
-    
+
     const deleteData = async (id, customUrl = baseUrl) => {
-        console.log("url", `${customUrl} / ${id}`)
         try {
-          const {data} =  await api.delete(`${customUrl}/${id}`)
-            console.log('log 01: ',dataState[customUrl].result)
-            const newArr = dataState[customUrl].result.filter(item => item._id !== id)
-            console.log('log 02: ', newArr)
+            const { data } = await api.delete(`${customUrl}/${id}`)
+            const oldData = dataState[customUrl]
+            const filterArr = oldData.data.filter(item => item._id !== id)
             swal({
                 title: data.message,
                 icon: "success",
@@ -102,42 +108,39 @@ const useData = (baseUrl) => {
             dataActions.setData({
                 key: customUrl,
                 value: {
-                    ...dataState[customUrl],
-                    result: newArr
+                    ...oldData,
+                    data: filterArr
                 },
             })
         } catch (error) {
             console.log("error", error.toString())
-            swal({
-                title: error.response?error.response.data.message:error.toString(),
-                icon: "error",
-            });
+            toast.error(error?.response?.data?.message ?? error.message)
         }
     }
-    
+
     const getDetail = (url) => {
         // /categories
-        
+
         url = url.split('/')
         const key = `/${url[1]}`
         const datId = url[2]
-        
+
         // const key = '/categories/20'
         // const dataId = 20
-        
-        
-        const data = dataState[key]
-        if(!data || data.length === 0) return null
+
+        const data = dataState[key].data
+        if (!data || data.length === 0) return null
         const findData = data?.filter(item => item._id === datId)
-        if(findData.length === 0) return null;
+        if (findData.length === 0) return null;
         return findData[0];
     }
-    
+
     useEffect(() => {
         if (!dataState[baseUrl]) {
             fetchData(baseUrl)
         }
     }, []);
+
     return {
         loading,
         data: dataState[baseUrl],
@@ -145,7 +148,8 @@ const useData = (baseUrl) => {
         createData,
         updateData,
         deleteData,
-        getDetail
+        getDetail,
+        clearData
     }
 }
 
