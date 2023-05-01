@@ -2,12 +2,15 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert';
+import { PAGE_SIZE } from "../const";
 import api from "../service";
 // import axios from 'axios'
 
 
 const useData = (baseUrl = '/') => {
     const [loading, setLoading] = useState(false)
+    const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE)
+
     const dataState = useStoreState(state => state.data.data)
     const dataActions = useStoreActions(action => action.data)
 
@@ -19,7 +22,7 @@ const useData = (baseUrl = '/') => {
         try {
             const response = await api.get(customUrl)
             dataActions.setData({
-                key: customUrl,
+                key: customUrl.split('?')[0],
                 value: response.data.payload
             })
         } catch (error) {
@@ -119,21 +122,25 @@ const useData = (baseUrl = '/') => {
     }
 
     const getDetail = (url) => {
-        // /categories
-
         url = url.split('/')
         const key = `/${url[1]}`
         const datId = url[2]
-
-        // const key = '/categories/20'
-        // const dataId = 20
-
         const data = dataState[key].data
         if (!data || data.length === 0) return null
         const findData = data?.filter(item => item._id === datId)
         if (findData.length === 0) return null;
         return findData[0];
     }
+
+    const handleChangePage = (_e, newPage) => {
+        fetchData(`${baseUrl.split('?')[0]}?page=${newPage + 1}&limit=${rowsPerPage}`)
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        const pageSize = parseInt(event.target.value, 10)
+        setRowsPerPage(pageSize);
+        fetchData(`${baseUrl.split('?')[0]}?page=1&limit=${pageSize}`)
+    };
 
     useEffect(() => {
         if (!dataState[baseUrl]) {
@@ -143,13 +150,16 @@ const useData = (baseUrl = '/') => {
 
     return {
         loading,
-        data: dataState[baseUrl],
+        rowsPerPage,
+        data: dataState[baseUrl.split('?')[0]],
         fetchData,
         createData,
         updateData,
         deleteData,
         getDetail,
-        clearData
+        clearData,
+        handleChangePage,
+        handleChangeRowsPerPage
     }
 }
 
