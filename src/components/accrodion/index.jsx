@@ -12,6 +12,19 @@ import { Link } from 'react-router-dom';
 
 const Accroding = ({ id, name, submenu, pathname, handleActiveMenu }) => {
 
+  /**
+   /
+   /caregories/list
+   categories
+
+
+  arr = ['']
+  arr = ['', 'category', 'list']
+  arr = ['category']
+  
+  
+  */
+
   const isMenuActive = () => {
     const arr = pathname.split('/')
     if (arr.length === 1 && pathname === id) {
@@ -30,6 +43,7 @@ const Accroding = ({ id, name, submenu, pathname, handleActiveMenu }) => {
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
+        expanded={true}
         aria-controls="panel1a-content"
         id="panel1a-header"
         sx={{ margin: 0, background: '#cfa434', minHeight: "20px" }}
@@ -51,7 +65,7 @@ const Accroding = ({ id, name, submenu, pathname, handleActiveMenu }) => {
               color: 'white',
               textDecoration: "none",
               display: 'block',
-              lineHeight: "50px",
+              lineHeight: "40px",
               paddingLeft: "15px"
             }} to={element.url}>{element.name}</Link>
           </Box>

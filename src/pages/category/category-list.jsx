@@ -20,6 +20,9 @@ import useData from "../../hooks/useData";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  // '.css-5n488s-MuiTableCell-root.MuiTableCell-head': {
+  //   textAlign: 'center'
+  // },
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
@@ -46,7 +49,6 @@ const AddList = () => {
 
 
 
-  console.log('data', data)
 
   return (
     <Box>
@@ -64,7 +66,7 @@ const AddList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.data.map((row) => (
+            {data?.data?.map((row) => (
               <StyledTableRow key={row.name}>
                 <img src={row.image} alt="img" width={100} />
                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>

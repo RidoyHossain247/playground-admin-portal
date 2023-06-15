@@ -2,19 +2,20 @@ import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useStoreState } from 'easy-peasy';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import useData from '../../hooks/useData';
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const { handelLogout } = useAuth()
-
-  const AuthAvatar = useStoreState(state => state.auth.user.firstName)
+  const { handelLogout, authUser } = useAuth()
+  const { getDetail } = useData(`/users`)
+  const userDetail = getDetail(`/users/${authUser._id}`)
+  const AuthAvatar = userDetail?.firstName
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -22,7 +23,7 @@ const UserMenu = () => {
     setAnchorEl(null);
   };
   const handelMyAccount = () => {
-
+    handleClose()
   }
 
   return (
@@ -45,8 +46,7 @@ const UserMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handelMyAccount}><Link style={{ textDecoration: 'none', color: 'black' }} to="/account">My account</Link></MenuItem>
+        <MenuItem onClick={handelMyAccount}><Link style={{ textDecoration: 'none', color: 'black' }} to="/account"> Manage My account</Link></MenuItem>
         <MenuItem onClick={handelLogout}>Logout</MenuItem>
       </Menu>
     </Box>

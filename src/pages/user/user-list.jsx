@@ -14,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import CustomPagination from '../../components/custom-pagination';
+import { PAGE_SIZE } from '../../const';
 import useData from "../../hooks/useData";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,13 +41,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const UserList = () => {
   const navigate = useNavigate()
-  const { data, deleteData } = useData("/users")
-  console.log(data)
+  const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useData(`/users?page=1&limit=${PAGE_SIZE}`)
 
   return (
     <Box>
       <Box textAlign="center" mb={2}>
-        <Typography fontSize={25} component="h3" color="primary">Size List</Typography>
+        <Typography fontSize={25} component="h3" color="primary">User List</Typography>
       </Box>
 
       <TableContainer component={Paper}>
@@ -90,6 +91,13 @@ const UserList = () => {
             ))}
           </TableBody>
         </Table>
+        <CustomPagination
+          currentPage={data?.currentPage}
+          totalDocument={data?.totalDocument}
+          rowsPerPage={rowsPerPage}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </TableContainer>
     </Box >
   )

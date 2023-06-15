@@ -1,8 +1,8 @@
 
-import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
+import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from 'yup'
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
+import * as yup from 'yup';
 import useData from "../../hooks/useData";
 
 const UpdateUser = () => {
@@ -62,7 +62,7 @@ const UpdateUser = () => {
                     fontWeight: 'bold'
                 }}
             >
-                Sing Up
+                Update User
             </Typography>
             <form
                 onSubmit={handleSubmit}
@@ -95,7 +95,7 @@ const UpdateUser = () => {
                     />
                 </Box>
                 <Box display={'flex'}>
-                    
+
                     <TextField
                         fullWidth
                         placeholder="Enter Address"

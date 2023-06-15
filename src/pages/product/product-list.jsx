@@ -15,6 +15,8 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import CustomPagination from '../../components/custom-pagination';
+import { PAGE_SIZE } from '../../const';
 import useData from "../../hooks/useData";
 
 
@@ -42,13 +44,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const ColorList = () => {
     const navigate = useNavigate()
 
-    const { data, deleteData } = useData("/products")
+    const { data: pdtData, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useData(`/products?page=1&limit=${PAGE_SIZE}`)
     const { data: Sizes } = useData("/sizes")
     const { data: colors } = useData("/colors")
 
     const colorData = colors.data
-    console.log('c', colorData)
-    console.log('dta', data)
     const sizeData = Sizes.data
 
     return (
@@ -71,7 +71,7 @@ const ColorList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.data.map((row) => (
+                        {pdtData?.data?.map((row) => (
                             <StyledTableRow key={row._id}>
                                 <img src={row.image} alt="img" width={100} />
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.title}</StyledTableCell>
@@ -107,6 +107,13 @@ const ColorList = () => {
                         ))}
                     </TableBody>
                 </Table>
+                <CustomPagination
+                    currentPage={pdtData?.currentPage}
+                    totalDocument={pdtData?.totalDocument}
+                    rowsPerPage={rowsPerPage}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </Box >
     )

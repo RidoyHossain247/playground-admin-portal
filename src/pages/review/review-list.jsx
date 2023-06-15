@@ -1,7 +1,5 @@
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import swal from 'sweetalert';
+import CustomPagination from '../../components/custom-pagination';
+import { PAGE_SIZE } from '../../const';
 import useData from "../../hooks/useData";
 
 
@@ -39,9 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const ReviewList = () => {
-    const navigate = useNavigate()
 
-    const { data, deleteData } = useData("/reviews")
+    const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useData(`/reviews?page=1&limit=${PAGE_SIZE}`)
     const { data: authData } = useData('/users')
     const userData = authData.data
     console.log('sss', data)
@@ -59,7 +56,6 @@ const ReviewList = () => {
                             <StyledTableCell sx={{ p: "5px" }} >User</StyledTableCell>
                             <StyledTableCell sx={{ p: "5px" }} >Comment</StyledTableCell>
                             <StyledTableCell sx={{ p: "5px" }} >Rating</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -70,30 +66,17 @@ const ReviewList = () => {
                                 )}
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.comment}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.rating}</StyledTableCell>
-                                <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button
-                                        onClick={() => {
-                                            swal({
-                                                title: "Are you sure?",
-                                                text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                icon: "warning",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        swal(
-                                                            deleteData(row._id),);
-                                                    }
-                                                    return
-                                                });
-                                        }}
-                                    ><DeleteIcon color="error" /></Button>
-                                </StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <CustomPagination
+                    currentPage={data?.currentPage}
+                    totalDocument={data?.totalDocument}
+                    rowsPerPage={rowsPerPage}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </Box >
     )
