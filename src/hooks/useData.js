@@ -4,20 +4,20 @@ import { toast } from 'react-toastify';
 import swal from 'sweetalert';
 import { PAGE_SIZE } from "../const";
 import api from "../service";
-// import axios from 'axios'
 
 
 const useData = (baseUrl = '/') => {
     const [loading, setLoading] = useState(false)
     const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE)
-
     const dataState = useStoreState(state => state.data.data)
     const dataActions = useStoreActions(action => action.data)
 
+    // Clear Data
     const clearData = () => {
         dataActions.clearData()
     }
 
+    // Fetch Data
     const fetchData = async (customUrl) => {
         try {
             const response = await api.get(customUrl)
@@ -30,8 +30,12 @@ const useData = (baseUrl = '/') => {
         }
     }
 
-    const createData = async (inputData, customUrl = baseUrl, headers = {}) => {
+    // Create Data
+    const createData = async (inputData, customUrl = null, headers = {}) => {
         setLoading(true)
+        if (!customUrl) {
+            customUrl = baseUrl.split('?')[0]
+        }
         try {
             const { data } = await api.post(customUrl, inputData, {
                 headers
@@ -41,7 +45,6 @@ const useData = (baseUrl = '/') => {
             if (dataState[customUrl]) {
                 const arr = dataState[customUrl].data
                 arr.unshift(data.payload)
-                console.log('s', dataState[customUrl])
                 stateObj = {
                     ...dataState[customUrl],
                     data: arr
@@ -69,8 +72,11 @@ const useData = (baseUrl = '/') => {
     }
 
     // Update Data
-    const updateData = async (inputData, customUrl, headers = {}) => {
+    const updateData = async (inputData, customUrl = null, headers = {}) => {
         setLoading(true)
+        if (!customUrl) {
+            customUrl = baseUrl.split('?')[0]
+        }
         try {
             const { data } = await api.put(customUrl, inputData, {
                 headers
@@ -95,11 +101,15 @@ const useData = (baseUrl = '/') => {
             return data;
         } catch (error) {
             toast.error(error?.response?.data?.message ?? error.message)
-
+            return null;
         }
     }
 
-    const deleteData = async (id, customUrl = baseUrl) => {
+    // Delete Data
+    const deleteData = async (id, customUrl = null) => {
+        if (!customUrl) {
+            customUrl = baseUrl.split('?')[0]
+        }
         try {
             const { data } = await api.delete(`${customUrl}/${id}`)
             const oldData = dataState[customUrl]
@@ -121,15 +131,20 @@ const useData = (baseUrl = '/') => {
         }
     }
 
+    // Get Data Details
     const getDetail = (url) => {
-        url = url.split('/')
-        const key = `/${url[1]}`
-        const datId = url[2]
-        const data = dataState[key].data
-        if (!data || data.length === 0) return null
-        const findData = data?.filter(item => item._id === datId)
-        if (findData.length === 0) return null;
-        return findData[0];
+        try {
+            url = url.split('/')
+            const key = `/${url[1]}`
+            const datId = url[2]
+            const data = dataState[key].data
+            if (!data || data.length === 0) return null
+            const findData = data.find(item => item._id === datId)
+            if (!findData) return null;
+            return findData;
+        } catch (error) {
+            return null;
+        }
     }
 
     const handleChangePage = (_e, newPage) => {
@@ -143,7 +158,7 @@ const useData = (baseUrl = '/') => {
     };
 
     useEffect(() => {
-        if (!dataState[baseUrl]) {
+        if (baseUrl.length > 1 && !dataState[baseUrl]) {
             fetchData(baseUrl)
         }
     }, []);

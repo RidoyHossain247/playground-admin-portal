@@ -15,6 +15,8 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import CustomPagination from '../../components/custom-pagination';
+import { PAGE_SIZE } from '../../const';
 import useData from "../../hooks/useData";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const SubcategoryList = () => {
-    const { data, deleteData } = useData("/subcategories")
+    const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useData(`/subcategories?page=1&limit=${PAGE_SIZE}`)
     const navigate = useNavigate()
 
 
@@ -86,6 +88,13 @@ const SubcategoryList = () => {
                         ))}
                     </TableBody>
                 </Table>
+                <CustomPagination
+                    currentPage={data?.currentPage}
+                    totalDocument={data?.totalDocument}
+                    rowsPerPage={rowsPerPage}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </Box >
     )

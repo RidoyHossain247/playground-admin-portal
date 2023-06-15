@@ -1,14 +1,33 @@
 
-import { useStoreState } from 'easy-peasy';
-import { Divider, Grid, Typography, Button, } from "@mui/material"
-import { Box, } from "@mui/system"
-import youserImage from "../../assets/Images/FB_IMG_1651283972600.jpg"
+import { Button, Divider, Grid, Typography, } from "@mui/material";
+import { Box, } from "@mui/system";
+import { useState } from "react";
+import youserImage from "../../assets/Images/FB_IMG_1651283972600.jpg";
+import useAuth from '../../hooks/useAuth';
+import useData from '../../hooks/useData';
+import AcountUpdateModal from "./AcountUpdateModal";
+
 
 const Account = () => {
-const AuthAvatarFirsrName= useStoreState(state=>state.auth.user.firstName);
-const AuthAvatarEmail= useStoreState(state=>state.auth.user.email)
-const AuthAvatarlastName= useStoreState(state=>state.auth.user.lastName)
-const AuthAvatarcontact= useStoreState(state=>state.auth.user.contact)
+
+    const [isOpen, setIsOpen] = useState(false)
+    const [userId, setUserId] = useState('')
+    const { authUser } = useAuth()
+    const { getDetail } = useData(`/users`)
+    const userDetail = getDetail(`/users/${authUser._id}`)
+
+    const handelChange = (userId) => {
+        setIsOpen(true)
+        setUserId(userId)
+    }
+    if (!userDetail) {
+        return <Grid container spacing={2} sx={{ boxShadow: '1px 2px 10px rgba(0,0,0,0.3)', padding: '10px', borderRadius: '10px' }}>
+            <Grid item xs={3} >
+                <h1>No user found</h1>
+            </Grid>
+        </Grid>
+    }
+
     return (
         <>
             <Grid container spacing={2} sx={{ boxShadow: '1px 2px 10px rgba(0,0,0,0.3)', padding: '10px', borderRadius: '10px' }}>
@@ -18,41 +37,26 @@ const AuthAvatarcontact= useStoreState(state=>state.auth.user.contact)
                     </Box>
                     <Divider />
                     <Box sx={{ padding: '15px 20px', }}>
-                        <Typography sx={{ fontSize: '30px', fontWeight: '600' }}>Youser name</Typography>
+                        <Typography sx={{ fontSize: '30px', fontWeight: '600' }}>{userDetail.firstName} {userDetail.lastName}</Typography>
                     </Box>
                     <Divider />
-                    <Box sx={{ padding: '15px 20px' }}>
-                        <Typography>Account</Typography>
-                    </Box>
                     <Divider />
                     <Box sx={{ padding: '15px 20px' }}>
-                        <Typography>Password</Typography>
-                    </Box>
-                    <Divider />
-                    <Box sx={{ padding: '15px 20px' }}>
-                        <Typography>Privacy & Policy</Typography>
-                    </Box>
-                    <Divider />
-                    <Box sx={{ padding: '15px 20px' }}>
-                        <Typography>Appilication</Typography>
-                    </Box>
-                    <Divider />
-                    <Box sx={{ padding: '15px 20px' }}>
-                        <Typography>Notification</Typography>
+                        <Typography>Change Password</Typography>
                     </Box>
                     <Divider />
                 </Grid>
                 <Grid item xs={9} >
-                    <Typography sx={{ fontSize: '30px', fontWeight: '600' }}>Account Seting</Typography>
+                    <Typography sx={{ fontSize: '30px', fontWeight: '600' }}>Profile Info</Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>first Name</Typography>
-                                <Typography>{AuthAvatarFirsrName}</Typography>
+                                <Typography>First Name</Typography>
+                                <Typography>{userDetail.firstName}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
                                 <Typography>Email</Typography>
-                                <Typography>{AuthAvatarEmail}</Typography>
+                                <Typography>{userDetail.email}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
                                 <Typography>Company</Typography>
@@ -63,24 +67,24 @@ const AuthAvatarcontact= useStoreState(state=>state.auth.user.contact)
                         <Grid item xs={6}>
                             <Box sx={{ padding: '10px 0' }}>
                                 <Typography>Last Name</Typography>
-                                <Typography>{AuthAvatarlastName}</Typography>
+                                <Typography>{userDetail.lastName}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
                                 <Typography>Phone</Typography>
-                                <Typography sx={{color:(AuthAvatarcontact ? "balck" : "#dfdfdf")}} >{AuthAvatarcontact ? AuthAvatarcontact : "No Number"}</Typography>
-                                {/* <Typography sx={{color:(AuthAvatarcontact && "balck" || "#dfdfdf")}} >{AuthAvatarcontact ? AuthAvatarcontact : "No Number"}</Typography> */}
+                                <Typography sx={{ color: (userDetail.contact ? "balck" : "#dfdfdf") }} >{userDetail.contact ? userDetail.AuthAvatarcontact : "No Number"}</Typography>
+
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
                                 <Typography>Location</Typography>
-                                <Typography>Section:12, Block: C, Road: 9, House: 16, Mirpur</Typography>
+                                <Typography>{userDetail.location}</Typography>
                             </Box>
 
                         </Grid>
 
                     </Grid>
-                    <Button variant="text">Update</Button>
-                    <Button variant="contained">Cancel</Button>
+                    <Button variant="text" onClick={() => handelChange(authUser._id)}>Edit</Button>
                 </Grid>
+                {isOpen && <AcountUpdateModal open={isOpen} setOpen={setIsOpen} userId={userId} />}
             </Grid>
         </>
     )

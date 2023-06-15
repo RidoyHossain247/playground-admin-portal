@@ -19,13 +19,10 @@ import CategoryList from "../pages/category/category-list";
 import ColorAdd from "../pages/color/color-add";
 import UpdateColor from '../pages/color/color-edit';
 import ColorList from '../pages/color/color-list';
-import AllOrders from '../pages/orders/all-orders';
-import MyOrders from '../pages/orders/my-orders';
+import Orders from '../pages/orders/orders';
 import ProductAdd from '../pages/product/product-add';
 import ProductEdit from '../pages/product/product-edit';
 import ProductList from '../pages/product/product-list';
-import ReviewAdd from '../pages/review/review-add';
-import ReviewEdit from '../pages/review/review-edit';
 import ReviewList from '../pages/review/review-list';
 import SizeAdd from '../pages/size/size-add';
 import UpdateSize from '../pages/size/size-edit';
@@ -77,11 +74,8 @@ const PrivetRoute = () => {
             <Route path='/product/add' element={<ProductAdd />} />
             <Route path='/product/list' element={<ProductList />} />
             <Route path='/product/edit/:id' element={<ProductEdit />} />
-            <Route path='/review/add' element={<ReviewAdd />} />
             <Route path='/review/list' element={<ReviewList />} />
-            <Route path='/review/edit/:id' element={<ReviewEdit />} />
-            <Route path='/all-order/list' element={<AllOrders />} />
-            <Route path='/my-order/list' element={<MyOrders />} />
+            <Route path='/order/list' element={<Orders />} />
             <Route path='/account' element={<Account />} />
          </Routes>
       </Layout>

@@ -1,18 +1,18 @@
-import React from 'react'
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { Formik, Form, ErrorMessage } from 'formik'
-import useData from '../../hooks/useData'
+import { Form, Formik, } from 'formik'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from "yup"
+import useData from '../../hooks/useData'
 
 const initValues = {
   name: '',
   image: ''
 }
 
-const validation=Yup.object().shape({
+const validation = Yup.object().shape({
   name: Yup.string()
-  .min(3).max(20)
+    .min(3).max(25)
     .required('Name is required'),
   image: Yup.mixed()
     .required('Image is required')
@@ -68,7 +68,7 @@ const AddForm = () => {
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.errors.name && formik.touched.name&& formik.errors.name}
+              helperText={formik.errors.name && formik.touched.name && formik.errors.name}
             />
             <TextField
               type='file'
@@ -83,7 +83,7 @@ const AddForm = () => {
               sx={{ my: 1 }}
               accept='image/*'
               error={formik.errors.image && formik.touched.image && Boolean(formik.errors.image)}
-              helperText={formik.errors.image && formik.touched.image&& formik.errors.image}
+              helperText={formik.errors.image && formik.touched.image && formik.errors.image}
             />
 
             <Box textAlign="end" mt={3}>

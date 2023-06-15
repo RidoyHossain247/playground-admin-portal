@@ -15,6 +15,8 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import CustomPagination from '../../components/custom-pagination';
+import { PAGE_SIZE } from '../../const';
 import useData from "../../hooks/useData";
 
 
@@ -42,7 +44,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const ColorList = () => {
     const navigate = useNavigate()
 
-    const { data, deleteData } = useData("/colors")
+    const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage, } = useData(`/colors?page=1&limit=${PAGE_SIZE}`)
+    console.log('data', data)
 
     return (
         <Box>
@@ -87,6 +90,13 @@ const ColorList = () => {
                         ))}
                     </TableBody>
                 </Table>
+                <CustomPagination
+                    totalDocument={data?.totalDocument}
+                    currentPage={data?.currentPage}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                    rowsPerPage={rowsPerPage}
+                />
             </TableContainer>
         </Box >
     )

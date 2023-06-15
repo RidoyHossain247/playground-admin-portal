@@ -6,7 +6,8 @@ import useData from "../../hooks/useData"
 const ProductAdd = () => {
 
     const { createData } = useData("/products")
-    const { data: scatData } = useData("/subcategories",)
+    const { data: catData } = useData(`/categories?page=1&limit=100`)
+    const { data: scatData } = useData("/subcategories?page=1&limit=100")
     const { data: sizeData } = useData("/sizes")
     const { data: colorData } = useData("/colors")
     const naviget = useNavigate()
@@ -16,6 +17,7 @@ const ProductAdd = () => {
         description: "",
         price: "",
         discount: "",
+        category: "",
         subcategory: "",
         colors: [],
         sizes: [],
@@ -31,6 +33,7 @@ const ProductAdd = () => {
             formData.append("price", values.price)
             formData.append("description", values.description)
             formData.append("discount", values.discount)
+            formData.append("category", values.category)
             formData.append("subcategory", values.subcategory)
             formData.append("sizes", JSON.stringify(values.sizes))
             formData.append("colors", JSON.stringify(values.colors))
@@ -110,15 +113,15 @@ const ProductAdd = () => {
                     <Select
                         fullWidth
                         displayEmpty
-                        value={values.subcategory}
+                        value={values.category}
                         onChange={handleChange}
-                        name="subcategory"
+                        name="category"
                     // label="Subcategory"
                     >
                         <MenuItem value="">
-                            <em>Subcategory</em>
+                            <em>Category</em>
                         </MenuItem>
-                        {scatData?.data && scatData.data.length !== 0 && scatData.data?.map((item) =>
+                        {catData?.data && catData.data.length !== 0 && catData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
@@ -129,6 +132,21 @@ const ProductAdd = () => {
                         display: 'flex',
                         marginBottom: '30px'
                     }}>
+                    <Select
+                        fullWidth
+                        displayEmpty
+                        value={values.subcategory}
+                        onChange={handleChange}
+                        name="subcategory"
+                    // label="Subcategory"
+                    >
+                        <MenuItem value="">
+                            <em>Subcategory</em>
+                        </MenuItem>
+                        {scatData?.data && scatData.data.length !== 0 && scatData.data?.map((item) => item.category._id === values.category &&
+                            <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
+                        )}
+                    </Select>
                     <Select
                         fullWidth
                         displayEmpty
@@ -143,6 +161,11 @@ const ProductAdd = () => {
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
+                </Box>
+                <Box
+                    gap={3}
+                    sx={{ display: 'flex', marginBottom: '30px' }}
+                >
                     <Select
                         fullWidth
                         displayEmpty
@@ -154,14 +177,9 @@ const ProductAdd = () => {
                             <em>Sizes</em>
                         </MenuItem>
                         {sizeData?.data && sizeData.data.length !== 0 && sizeData.data?.map((item) =>
-                            <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
+                            < MenuItem key={item._id} value={item._id} >{item.name}</MenuItem>
                         )}
                     </Select>
-                </Box>
-                <Box
-                    gap={3}
-                    sx={{ display: 'flex', marginBottom: '30px' }}
-                >
                     <TextField
                         fullWidth
                         label="Description"
@@ -171,22 +189,22 @@ const ProductAdd = () => {
                         value={values.description}
                         onChange={handleChange}
                     />
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        type="file"
-                        onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
-                        accept="image/*"
-                    />
                 </Box>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="file"
+                    onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
+                    accept="image/*"
+                />
 
-                <Box gap={3} sx={{ textAlign: 'end' }}>
+                <Box gap={3} sx={{ textAlign: 'end', marginTop: '12px' }}>
                     <Button variant="outlined">Reset</Button>
                     <Button type="submit" variant="contained" sx={{ marginLeft: '30px' }} >Submit</Button>
                 </Box>
 
             </Box>
-        </form>
+        </form >
     )
 }
 export default ProductAdd

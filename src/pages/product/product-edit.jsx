@@ -7,12 +7,12 @@ import useData from "../../hooks/useData"
 const ProductEdit = () => {
 
     const params = useParams()
-    const { data: scatData } = useData("/subcategories",)
+    const { data: catData } = useData("/categories")
+    const { data: scatData } = useData("/subcategories")
     const { data: sizeData } = useData("/sizes")
     const { data: colorData } = useData("/colors")
     const { updateData, getDetail } = useData(`/products`)
     const data = getDetail(`/products/${params.id}`)
-    console.log('data', data)
     const naviget = useNavigate()
 
     const initialValues = {
@@ -20,6 +20,7 @@ const ProductEdit = () => {
         description: data ? data.description : "",
         price: data ? data.price : "",
         discount: data ? data.discount : "",
+        subcategory: data ? data.category?._id : "",
         subcategory: data ? data.subcategory?._id : "",
         colors: data ? data.colors : [],
         sizes: data ? data.sizes : [],
@@ -35,6 +36,7 @@ const ProductEdit = () => {
             formData.append("price", values.price)
             formData.append("description", values.description)
             formData.append("discount", values.discount)
+            formData.append("subcategory", values.category)
             formData.append("subcategory", values.subcategory)
             formData.append("sizes", JSON.stringify(values.sizes))
             formData.append("colors", JSON.stringify(values.colors))
@@ -66,7 +68,7 @@ const ProductEdit = () => {
                         fontWeight: '600'
                     }}
                 >
-                    Product add{params.id}
+                    Product add
                 </Typography>
                 <Box
                     gap={3}
@@ -113,14 +115,15 @@ const ProductEdit = () => {
                     <Select
                         fullWidth
                         displayEmpty
-                        value={values.subcategory}
+                        value={values.category}
                         onChange={handleChange}
-                        name="subcategory"
+                        name="category"
+                    // label="Subcategory"
                     >
                         <MenuItem value="">
-                            <em>Subcategory</em>
+                            <em>Category</em>
                         </MenuItem>
-                        {scatData.data && scatData.data.length !== 0 && scatData.data?.map((item) =>
+                        {catData?.data && catData.data.length !== 0 && catData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
@@ -134,6 +137,21 @@ const ProductEdit = () => {
                     <Select
                         fullWidth
                         displayEmpty
+                        value={values.subcategory}
+                        onChange={handleChange}
+                        name="subcategory"
+                    // label="Subcategory"
+                    >
+                        <MenuItem value="">
+                            <em>Subcategory</em>
+                        </MenuItem>
+                        {scatData?.data && scatData.data.length !== 0 && scatData.data?.map((item) => item.category._id === values.category &&
+                            <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
+                        )}
+                    </Select>
+                    <Select
+                        fullWidth
+                        displayEmpty
                         value={values.colors}
                         onChange={handleChange}
                         name="colors"
@@ -141,10 +159,15 @@ const ProductEdit = () => {
                         <MenuItem value="">
                             <em>Colors</em>
                         </MenuItem>
-                        {colorData.data && colorData.data.length !== 0 && colorData.data.map((item) =>
+                        {colorData?.data && colorData.data.length !== 0 && colorData.data?.map((item) =>
                             <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                         )}
                     </Select>
+                </Box>
+                <Box
+                    gap={3}
+                    sx={{ display: 'flex', marginBottom: '30px' }}
+                >
                     <Select
                         fullWidth
                         displayEmpty
@@ -155,15 +178,10 @@ const ProductEdit = () => {
                         <MenuItem value="">
                             <em>Sizes</em>
                         </MenuItem>
-                        {sizeData.data && sizeData.data.length !== 0 && sizeData.data.map((item) =>
-                            <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
+                        {sizeData?.data && sizeData.data.length !== 0 && sizeData.data?.map((item) =>
+                            < MenuItem key={item._id} value={item._id} >{item.name}</MenuItem>
                         )}
                     </Select>
-                </Box>
-                <Box
-                    gap={3}
-                    sx={{ display: 'flex', marginBottom: '30px' }}
-                >
                     <TextField
                         fullWidth
                         label="Description"
@@ -173,22 +191,21 @@ const ProductEdit = () => {
                         value={values.description}
                         onChange={handleChange}
                     />
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        type="file"
-                        name="description"
-                        onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
-                        accept="image/*"
-                    />
                 </Box>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="file"
+                    onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
+                    accept="image/*"
+                />
 
                 <Box gap={3} sx={{ textAlign: 'end' }}>
                     <Button type="submit" variant="contained" sx={{ marginLeft: '30px' }} >Update</Button>
                 </Box>
 
             </Box>
-        </form>
+        </form >
     )
 }
 export default ProductEdit

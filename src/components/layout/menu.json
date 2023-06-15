@@ -1,5 +1,15 @@
 [
    {
+      "id": "order",
+      "name": "Order",
+      "submenu": [
+         {
+            "url": "/order/list",
+            "name": "All Order"
+         }
+      ]
+   },
+   {
       "id": "category",
       "name": "Category",
       "submenu": [
@@ -57,7 +67,7 @@
    },
    {
       "id": "product",
-      "name": "product",
+      "name": "Product",
       "submenu": [
          {
             "url": "/product/add",
@@ -71,7 +81,7 @@
    },
    {
       "id": "user",
-      "name": "user",
+      "name": "User",
       "submenu": [
          {
             "url": "/user/add",
@@ -85,12 +95,8 @@
    },
    {
       "id": "review",
-      "name": "review",
+      "name": "Review",
       "submenu": [
-         {
-            "url": "/review/add",
-            "name": "review Add"
-         },
          {
             "url": "/review/list",
             "name": "review List"
