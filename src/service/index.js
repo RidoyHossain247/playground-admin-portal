@@ -7,6 +7,7 @@ const api = axios.create({
         'Content-type': 'application/json',
     },
 });
+export default api;
 
 
 export const setAuthToken = (authToken = null) => {
@@ -20,4 +21,3 @@ export const clearAuthToken = () => {
     api.defaults.headers.common['Authorization'] = '';
 }
 
-export default api;

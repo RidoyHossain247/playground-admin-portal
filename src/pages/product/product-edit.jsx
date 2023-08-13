@@ -20,7 +20,7 @@ const ProductEdit = () => {
         description: data ? data.description : "",
         price: data ? data.price : "",
         discount: data ? data.discount : "",
-        subcategory: data ? data.category?._id : "",
+        category: data ? data.subcategory.category : "",
         subcategory: data ? data.subcategory?._id : "",
         colors: data ? data.colors : [],
         sizes: data ? data.sizes : [],
@@ -36,7 +36,7 @@ const ProductEdit = () => {
             formData.append("price", values.price)
             formData.append("description", values.description)
             formData.append("discount", values.discount)
-            formData.append("subcategory", values.category)
+            formData.append("category", values.subcategory.category)
             formData.append("subcategory", values.subcategory)
             formData.append("sizes", JSON.stringify(values.sizes))
             formData.append("colors", JSON.stringify(values.colors))
@@ -117,7 +117,7 @@ const ProductEdit = () => {
                         displayEmpty
                         value={values.category}
                         onChange={handleChange}
-                        name="category"
+                    // name="category"
                     // label="Subcategory"
                     >
                         <MenuItem value="">
@@ -139,7 +139,7 @@ const ProductEdit = () => {
                         displayEmpty
                         value={values.subcategory}
                         onChange={handleChange}
-                        name="subcategory"
+                    // name="subcategory"
                     // label="Subcategory"
                     >
                         <MenuItem value="">
@@ -154,7 +154,7 @@ const ProductEdit = () => {
                         displayEmpty
                         value={values.colors}
                         onChange={handleChange}
-                        name="colors"
+                    // name="colors"
                     >
                         <MenuItem value="">
                             <em>Colors</em>
@@ -173,7 +173,7 @@ const ProductEdit = () => {
                         displayEmpty
                         value={values.sizes}
                         onChange={handleChange}
-                        name="sizes"
+                    // name="sizes"
                     >
                         <MenuItem value="">
                             <em>Sizes</em>
@@ -187,7 +187,7 @@ const ProductEdit = () => {
                         label="Description"
                         variant="outlined"
                         type="text"
-                        name="description"
+                        // name="description"
                         value={values.description}
                         onChange={handleChange}
                     />
