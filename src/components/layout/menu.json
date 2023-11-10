@@ -1,106 +1,42 @@
 [
    {
       "id": "order",
-      "name": "Order",
-      "submenu": [
-         {
-            "url": "/order/list",
-            "name": "All Order"
-         }
-      ]
+      "url": "/order",
+      "name": "Order"
    },
    {
       "id": "category",
-      "name": "Category",
-      "submenu": [
-         {
-            "url": "/category/add",
-            "name": "Category Add"
-         },
-         {
-            "url": "/category/list",
-            "name": "Category List"
-         }
-      ]
+      "url": "/category",
+      "name": "Category"
    },
    {
       "id": "subcategory",
-      "name": "Sub Category",
-      "submenu": [
-         {
-            "url": "/subcategory/add",
-            "name": "Subcategory Add"
-         },
-         {
-            "url": "/subcategory/list",
-            "name": "Subcategory List"
-         }
-      ]
+      "url": "/subcategory",
+      "name": "Sub Category"
    },
    {
       "id": "color",
-      "name": "Color",
-      "submenu": [
-         {
-            "url": "/color/add",
-            "name": "Color Add"
-         },
-         {
-            "url": "/color/list",
-            "name": "Color List"
-         }
-      ]
+      "url": "/color",
+      "name": "Color"
    },
    {
       "id": "size",
-      "name": "Size",
-      "submenu": [
-         {
-            "url": "/size/add",
-            "name": "Size Add"
-         },
-         {
-            "url": "/size/list",
-            "name": "Size List"
-         }
-      ]
+      "url": "/size",
+      "name": "Size"
    },
    {
       "id": "product",
-      "name": "Product",
-      "submenu": [
-         {
-            "url": "/product/add",
-            "name": "product Add"
-         },
-         {
-            "url": "/product/list",
-            "name": "product List"
-         }
-      ]
+      "url": "/product",
+      "name": "Product"
    },
    {
       "id": "user",
-      "name": "User",
-      "submenu": [
-         {
-            "url": "/user/add",
-            "name": "user Add"
-         },
-         {
-            "url": "/user/list",
-            "name": "user List"
-         }
-      ]
+      "url": "/user",
+      "name": "User"
    },
    {
       "id": "review",
-      "name": "Review",
-      "submenu": [
-         {
-            "url": "/review/list",
-            "name": "review List"
-         }
-      ]
+      "url": "/review",
+      "name": "Review"
    }
 ]

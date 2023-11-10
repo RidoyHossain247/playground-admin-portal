@@ -1,11 +1,9 @@
+import { StoreProvider } from 'easy-peasy';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-
-import { StoreProvider } from 'easy-peasy';
-
 import { setAuthToken } from './service';
 import Store from './store';
 

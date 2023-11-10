@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import AccordionTask from '../accordion-task';
 import Account from '../components/account';
 import DashboardCard from '../components/dashboard-card';
 import Layout from '../components/layout';
@@ -16,11 +17,13 @@ import VerifyEmailPage from '../pages/auth/verify-email';
 import CategoryAdd from "../pages/category/category-add";
 import CategoryEdit from '../pages/category/category-edit';
 import CategoryList from "../pages/category/category-list";
+import Color from '../pages/color';
 import ColorAdd from "../pages/color/color-add";
 import UpdateColor from '../pages/color/color-edit';
 import ColorList from '../pages/color/color-list';
 import Orders from '../pages/orders/orders';
 import ProductAdd from '../pages/product/product-add';
+import ProductCreate from '../pages/product/product-create';
 import ProductEdit from '../pages/product/product-edit';
 import ProductList from '../pages/product/product-list';
 import ReviewList from '../pages/review/review-list';
@@ -58,6 +61,7 @@ const PrivetRoute = () => {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/color" element={<Color />} />
             <Route path="/color/add" element={<ColorAdd />} />
             <Route path="/color/list" element={<ColorList />} />
             <Route path='/color/edit/:id' element={<UpdateColor />} />
@@ -72,11 +76,13 @@ const PrivetRoute = () => {
             <Route path='/user/list' element={<UserList />} />
             <Route path='/user/edit/:id' element={<UpdateUser />} />
             <Route path='/product/add' element={<ProductAdd />} />
+            <Route path='/product/create' element={<ProductCreate />} />
             <Route path='/product/list' element={<ProductList />} />
             <Route path='/product/edit/:id' element={<ProductEdit />} />
             <Route path='/review/list' element={<ReviewList />} />
             <Route path='/order/list' element={<Orders />} />
             <Route path='/account' element={<Account />} />
+            <Route path='/accordion' element={<AccordionTask />} />
          </Routes>
       </Layout>
    )

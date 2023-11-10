@@ -41,11 +41,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const ColorList = () => {
+const ColorList = ({ editHandler }) => {
     const navigate = useNavigate()
 
     const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage, } = useData(`/colors?page=1&limit=${PAGE_SIZE}`)
-    console.log('data', data)
 
     return (
         <Box>
@@ -66,7 +65,7 @@ const ColorList = () => {
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button onClick={() => navigate(`/color/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
+                                    <Button onClick={() => editHandler(row._id)} ><EditIcon color="secondary.light" /></Button>
                                     <Button
                                         onClick={() => {
                                             swal({

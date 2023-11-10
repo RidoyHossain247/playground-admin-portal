@@ -75,9 +75,9 @@ const AddList = () => {
                   <Button sx={{}} onClick={() => {
                     swal({
                       title: "Are you sure?",
-                      text: "Once deleted, you will not be able to recover this imaginary file!",
+                      text: "You want to delete this item!",
                       icon: "warning",
-                      buttons: true,
+                      buttons: ["Cancle", "Yes"],
                       dangerMode: true,
                     })
                       .then((agree) => agree && deleteData(row._id))

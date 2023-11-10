@@ -19,17 +19,17 @@ const SignInPage = () => {
         password: "",
     }
 
-    const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur, dirty, isValid, isSubmitting } = useFormik({
         initialValues,
         onSubmit: async (values, action) => {
             console.log("value", values)
-           const res= await handelLogin(values)
-           if(res){
-            action.resetForm()
-            navigate("/")
-        }
+            const res = await handelLogin(values)
+            if (res) {
+                action.resetForm()
+                navigate("/")
+            }
         },
-        
+
         validationSchema: personSchema
     })
 
@@ -72,6 +72,7 @@ const SignInPage = () => {
                     name='email'
                     value={values.email}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     error={errors.email && touched.email && Boolean(errors.email)}
                     helperText={errors.email && touched.email && errors.email}
                 />
@@ -82,6 +83,7 @@ const SignInPage = () => {
                     name='password'
                     value={values.password}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     sx={{ my: 2 }}
                     variant="outlined"
                     error={errors.password && touched.password && Boolean(errors.password)}
@@ -99,19 +101,17 @@ const SignInPage = () => {
                     Forgot Password
                 </Link>
                 <Button
+                    sx={{
+                        my: '8px',
+                    }}
                     fullWidth
                     type="submit"
-                    sx={{
-                        my: 2,
-                        fontSize: 18,
-                        color: '#fff',
-                        bgcolor: ' #3C1FF4',
-                        ":hover": {
-                            bgcolor: '#3C1FF4'
-                        }
-                    }}
+                    size={"large"}
+                    variant="contained"
+                    disabled={!dirty || !isValid}
+
                 >
-                    SingIn
+                    {isSubmitting ? "Lodding.." : "  SingIn"}
                 </Button>
             </form>
             <Box sx={{ display: "flex", marginRight: "auto" }}>
@@ -124,20 +124,6 @@ const SignInPage = () => {
                     }}>Sign Up</Link>
 
             </Box>
-            {/* <Button
-                fullWidth
-                sx={{
-                    my: 2,
-                    fontSize: 18,
-                    color: '#fff',
-                    bgcolor: ' #3C1FF4',
-                    ":hover": {
-                        bgcolor: '#3C1FF4'
-                    }
-                }}
-            >
-                SignUp
-            </Button> */}
         </Box>
     )
 }

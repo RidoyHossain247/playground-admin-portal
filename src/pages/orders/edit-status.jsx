@@ -2,6 +2,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
+import swal from 'sweetalert';
 import useData from '../../hooks/useData';
 
 export default function EditStatus({ orderId, status }) {
@@ -45,9 +46,26 @@ export default function EditStatus({ orderId, status }) {
             {status === 1 && <MenuItem onClick={() => handleChange(2)}>Processing</MenuItem>}
             {status === 2 && <MenuItem onClick={() => handleChange(3)}>Pickup</MenuItem>}
             {status === 3 && <MenuItem onClick={() => handleChange(4)}>Deliverd</MenuItem>}
-            {status < 4 && <MenuItem onClick={() => handleChange(5)}>Cancle</MenuItem>}
-            {status > 3 && <MenuItem onClick={handleClose}>Unavailble Changes</MenuItem>}
+            {status < 4 && <MenuItem onClick={() => {
+               swal({
+                  title: "Are you sure?",
+                  text: "You want to cancle this order items",
+                  icon: "warning",
+                  buttons: ["Cancel", "Yes"],
+                  dangerMode: true,
+               })
+                  .then((willDelete) => {
+                     if (willDelete) {
+                        handleChange(5)
+                        swal("Order items has been Cancled!", {
+                           icon: "success",
+                        });
+                     }
+                  });
+            }}>Cancle</MenuItem>}
          </Menu>
       </div>
    );
 }
+
+// handleChange(5)

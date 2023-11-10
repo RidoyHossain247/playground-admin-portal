@@ -2,7 +2,6 @@
 import { Button, Divider, Grid, Typography, } from "@mui/material";
 import { Box, } from "@mui/system";
 import { useState } from "react";
-import youserImage from "../../assets/Images/FB_IMG_1651283972600.jpg";
 import useAuth from '../../hooks/useAuth';
 import useData from '../../hooks/useData';
 import AcountUpdateModal from "./AcountUpdateModal";
@@ -15,6 +14,7 @@ const Account = () => {
     const { authUser } = useAuth()
     const { getDetail } = useData(`/users`)
     const userDetail = getDetail(`/users/${authUser._id}`)
+    console.log('userDetail', userDetail)
 
     const handelChange = (userId) => {
         setIsOpen(true)
@@ -33,7 +33,7 @@ const Account = () => {
             <Grid container spacing={2} sx={{ boxShadow: '1px 2px 10px rgba(0,0,0,0.3)', padding: '10px', borderRadius: '10px' }}>
                 <Grid item xs={3} >
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <img style={{ width: '50%', height: 'atuo', borderRadius: "100px", }} alt={youserImage} src={youserImage} />
+                        <img style={{ width: '50%', height: 'atuo', borderRadius: "100px", }} alt="userPhoto" src='' />
                     </Box>
                     <Divider />
                     <Box sx={{ padding: '15px 20px', }}>
@@ -51,32 +51,32 @@ const Account = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>First Name</Typography>
+                                <Typography fontWeight={'bold'}>First Name:</Typography>
                                 <Typography>{userDetail.firstName}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>Email</Typography>
+                                <Typography fontWeight={'bold'}>Email:</Typography>
                                 <Typography>{userDetail.email}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>Company</Typography>
+                                <Typography fontWeight={'bold'}>Company:</Typography>
                                 <Typography>Betnik Techonology</Typography>
                             </Box>
                         </Grid>
 
                         <Grid item xs={6}>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>Last Name</Typography>
+                                <Typography fontWeight={'bold'}>Last Name:</Typography>
                                 <Typography>{userDetail.lastName}</Typography>
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>Phone</Typography>
-                                <Typography sx={{ color: (userDetail.contact ? "balck" : "#dfdfdf") }} >{userDetail.contact ? userDetail.AuthAvatarcontact : "No Number"}</Typography>
+                                <Typography fontWeight={'bold'} >Phone:</Typography>
+                                <Typography sx={{ color: (userDetail.contact ? "balck" : "#dfdfdf") }} >{userDetail.contact ? userDetail.contact : "No Number"}</Typography>
 
                             </Box>
                             <Box sx={{ padding: '10px 0' }}>
-                                <Typography>Location</Typography>
-                                <Typography>{userDetail.location}</Typography>
+                                <Typography fontWeight={'bold'}>Location:</Typography>
+                                <Typography>{userDetail.address}</Typography>
                             </Box>
 
                         </Grid>

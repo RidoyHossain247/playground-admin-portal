@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useData from '../../hooks/useData';
+import { subcategoryValidation } from '../../validationError';
 
 
 const UpdateSubcategory = () => {
@@ -20,6 +21,7 @@ const UpdateSubcategory = () => {
     };
     const formik = useFormik({
         initialValues,
+        validationSchema: subcategoryValidation,
         onSubmit: async (values, action) => {
             console.log("values", values);
             const res = await updateData(values, `/subcategories/${params.id}`)
@@ -42,7 +44,11 @@ const UpdateSubcategory = () => {
                         name="name"
                         value={formik.values.name}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name && formik.errors.name}
                     />
+
 
                 </Box>
                 <Box >
@@ -52,7 +58,11 @@ const UpdateSubcategory = () => {
                         value={formik.values.category}
                         onChange={formik.handleChange}
                         name="category"
+                        onBlur={formik.handleBlur}
+                        error={formik.errors.category && formik.touched.category && Boolean(formik.errors.category)}
+                        helperText={formik.touched.category && formik.errors.category && formik.errors.category}
                     >
+
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
@@ -62,10 +72,14 @@ const UpdateSubcategory = () => {
                     </Select>
                 </Box>
                 <Box textAlign="end" mt={3}>
-                    <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Update"}</Button>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={!formik.isValid}
+                    >{formik.isSubmitting ? "Loading" : "Update"}</Button>
                 </Box>
-            </form>
-        </Box>
+            </form >
+        </Box >
     );
 }
 

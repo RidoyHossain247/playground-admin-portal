@@ -2,13 +2,15 @@ import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useData from '../../hooks/useData';
+import ChangePassword from '../password-change';
 
 const UserMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openModal, setIsOpenModal] = useState(false);
   const { handelLogout, authUser } = useAuth()
   const { getDetail } = useData(`/users`)
   const userDetail = getDetail(`/users/${authUser._id}`)
@@ -24,6 +26,11 @@ const UserMenu = () => {
   };
   const handelMyAccount = () => {
     handleClose()
+  }
+  const navigate = useNavigate()
+
+  const handelModal = () => {
+    setIsOpenModal(true)
   }
 
   return (
@@ -46,9 +53,11 @@ const UserMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handelMyAccount}><Link style={{ textDecoration: 'none', color: 'black' }} to="/account"> Manage My account</Link></MenuItem>
+        <MenuItem onClick={handelMyAccount}><Link style={{ textDecoration: 'none', color: 'black' }} to="/account"> My account</Link></MenuItem>
+        <MenuItem onClick={handelModal}>Change password</MenuItem>
         <MenuItem onClick={handelLogout}>Logout</MenuItem>
       </Menu>
+      {openModal && <ChangePassword openModal={openModal} setIsOpenModal={setIsOpenModal} />}
     </Box>
   )
 }

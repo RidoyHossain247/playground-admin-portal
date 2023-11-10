@@ -40,7 +40,6 @@ const useData = (baseUrl = '/') => {
             const { data } = await api.post(customUrl, inputData, {
                 headers
             })
-
             let stateObj = {}
             if (dataState[customUrl]) {
                 const arr = dataState[customUrl].data

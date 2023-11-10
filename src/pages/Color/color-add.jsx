@@ -1,14 +1,15 @@
 
 
-import React from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useData from '../../hooks/useData';
-import { useNavigate } from 'react-router-dom'
+import { colorValidation } from '../../validationError';
 
-const ColorAdd = () => {
+const ColorAdd = ({ editHandler }) => {
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const { createData } = useData("/colors")
 
@@ -18,18 +19,16 @@ const ColorAdd = () => {
 
     const formik = useFormik({
         initialValues,
-        onSubmit: async(values) => {
+        validationSchema: colorValidation,
+        onSubmit: async (values, action) => {
             console.log(values);
-            const res= await createData(values)
-            if(res){
-                navigate('/color/list')
+            const res = await createData(values)
+            if (res) {
+                action.resetForm()
+                editHandler()
             }
-            },
+        },
     });
-
-    const handleReset = () => {
-        formik.resetForm();
-    };
 
     return (
         <Box>
@@ -43,10 +42,17 @@ const ColorAdd = () => {
                     name="name"
                     value={formik.values.name}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name && formik.errors.name}
                 />
                 <Box textAlign="end" mt={3}>
-                    <Button sx={{ mr: 1 }} variant="outlined" type="button" onClick={handleReset}>Reset</Button>
-                    <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Submit"}</Button>
+                    <Button sx={{ mr: 1 }} variant="outlined" type="button" onClick={formik.resetForm}>Reset</Button>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={!formik.dirty || !formik.isValid}
+                    >{formik.isSubmitting ? "Loading" : "Submit"}</Button>
                 </Box>
             </form>
         </Box>

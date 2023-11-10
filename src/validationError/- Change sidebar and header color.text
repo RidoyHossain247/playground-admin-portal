@@ -1,0 +1,23 @@
+- Change sidebar and header color
+- Add link to logo target home
+- Remove all serarch from header
+- Add menubar
+   - My Account
+   - Change password
+   - Logout
+- Profile picture dynamic 
+- Order status add radious 
+- Change datetime format evrywhere should be 25th, Oct 25 10:50 am
+- If price grater than 0 then it will be show
+- Change Total-Price => Total Price
+- Chnage Date&Time => Order Time into order detail modal
+- Fixed space issue
+- Add confirmation modal before take action
+- Hide dot if doesn't any action available to take
+- Disable submit button if not filed up required filed
+- Reset button doesn't work
+- User can coose only support image format 
+- In edit form validation not work
+- Delete confirmation modal show until category delete using api 
+- Implement modal for add and edit content 
+- Remove mulitple category from laft dropdown menu 

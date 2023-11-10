@@ -35,7 +35,7 @@ const SignUpPage = () => {
         contact: ""
     }
 
-    const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur, dirty, isValid, isSubmitting } = useFormik({
         initialValues,
         onSubmit: async (values, action) => {
             console.log("value", values)
@@ -84,11 +84,12 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Enter First Name"
                         type={'text'}
-                        sx={{ my: 2, mr: 2 }}
+                        sx={{ my: 1, mr: 2 }}
                         variant="outlined"
                         name='firstName'
                         value={values.firstName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.firstName && touched.firstName && Boolean(errors.firstName)}
                         helperText={errors.firstName && touched.firstName && errors.firstName}
 
@@ -97,11 +98,12 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Enter Last Name"
                         type={'text'}
-                        sx={{ my: 2 }}
+                        sx={{ my: 1 }}
                         variant="outlined"
                         name="lastName"
                         value={values.lastName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.lastName && touched.lastName && Boolean(errors.lastName)}
                         helperText={errors.lastName && touched.lastName && errors.lastName}
                     />
@@ -111,11 +113,12 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Enter Email"
                         type={'email'}
-                        sx={{ my: 2, mr: 2 }}
+                        sx={{ my: 1, mr: 2 }}
                         variant="outlined"
                         name="email"
                         value={values.email}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.email && touched.email && Boolean(errors.email)}
                         helperText={errors.email && touched.email && errors.email}
                     />
@@ -123,11 +126,12 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Enter Password"
                         type='password'
-                        sx={{ my: 2 }}
+                        sx={{ my: 1 }}
                         variant="outlined"
                         name="password"
                         value={values.password}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.password && touched.password && Boolean(errors.password)}
                         helperText={errors.password && touched.password && errors.password}
                     />
@@ -137,11 +141,12 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Enter ConfirmPassword"
                         type='password'
-                        sx={{ my: 2, mr: 2 }}
+                        sx={{ my: 1, mr: 2 }}
                         variant="outlined"
                         name="confirmPassword"
                         value={values.confirmPassword}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.confirmPassword && touched.confirmPassword && Boolean(errors.confirmPassword)}
                         helperText={errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
                     />
@@ -149,30 +154,28 @@ const SignUpPage = () => {
                         fullWidth
                         placeholder="Contact Number"
                         type='number'
-                        sx={{ my: 2 }}
+                        sx={{ my: 1 }}
                         variant="outlined"
                         name="contact"
                         value={values.contact}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.contact && touched.contact && Boolean(errors.contact)}
                         helperText={errors.contact && touched.contact && errors.contact}
                     />
                 </Box>
-
                 <Button
+                    sx={{
+                        my: '8px',
+                    }}
                     fullWidth
                     type="submit"
-                    sx={{
-                        my: 2,
-                        fontSize: 18,
-                        color: '#fff',
-                        bgcolor: ' #3C1FF4',
-                        ":hover": {
-                            bgcolor: '#3C1FF4'
-                        }
-                    }}
+                    size={"large"}
+                    variant="contained"
+                    disabled={!dirty || !isValid}
+
                 >
-                    SignUp
+                    {isSubmitting ? "Lodding.." : "  SignUp"}
                 </Button>
             </form>
             <Box
