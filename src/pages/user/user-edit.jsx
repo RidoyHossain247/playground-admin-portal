@@ -32,8 +32,9 @@ const UpdateUser = () => {
         contact: data.contact ?? ""
     }
 
-    const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur, isValid, isSubmitting } = useFormik({
         initialValues,
+        validationSchema: personSchema,
         onSubmit: async (values, action) => {
             const res = await updateData(values, `/users/${params.id}`)
             if (res) {
@@ -41,7 +42,6 @@ const UpdateUser = () => {
                 navigate("/user/list")
             }
         },
-        validationSchema: personSchema
 
     })
 
@@ -78,6 +78,7 @@ const UpdateUser = () => {
                         name='firstName'
                         value={values.firstName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.firstName && touched.firstName && Boolean(errors.firstName)}
                         helperText={errors.firstName && touched.firstName && errors.firstName}
                     />
@@ -90,6 +91,7 @@ const UpdateUser = () => {
                         name="lastName"
                         value={values.lastName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.lastName && touched.lastName && Boolean(errors.lastName)}
                         helperText={errors.lastName && touched.lastName && errors.lastName}
                     />
@@ -105,6 +107,7 @@ const UpdateUser = () => {
                         name="address"
                         value={values.address}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.address && touched.address && Boolean(errors.address)}
                         helperText={errors.address && touched.address && errors.address}
                     />
@@ -119,6 +122,7 @@ const UpdateUser = () => {
                         name="contact"
                         value={values.contact}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.contact && touched.contact && Boolean(errors.contact)}
                         helperText={errors.contact && touched.contact && errors.contact}
                     />
@@ -126,18 +130,13 @@ const UpdateUser = () => {
 
                 <Button
                     fullWidth
-                    type="submit"
-                    sx={{
-                        my: 2,
-                        fontSize: 18,
-                        color: '#fff',
-                        bgcolor: ' #3C1FF4',
-                        ":hover": {
-                            bgcolor: '#3C1FF4'
-                        }
-                    }}
+                    variant="contained"
+                    type='submit'
+                    size={"large"}
+                    conta
+                    disabled={!isValid}
                 >
-                    Update
+                    {isSubmitting ? "Lodding" : "Submit"}
                 </Button>
             </form>
         </Box>

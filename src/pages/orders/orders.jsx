@@ -94,13 +94,13 @@ const AllOrder = () => {
                     <TableHead sx={{ textAlign: 'center !important' }}>
                         <TableRow >
                             <StyledTableCell sx={{ p: "5px" }} >#</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Order Id</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Total-Quantity</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Total-Price</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Total-Discount</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Delivery-Fee</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Order ID</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Total Quantity</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Total Price</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Total Discount</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Delivery Fee</StyledTableCell>
                             <StyledTableCell sx={{ p: "5px" }} >Order Status</StyledTableCell>
-                            <StyledTableCell sx={{ p: "5px" }} >Data&tTime</StyledTableCell>
+                            <StyledTableCell sx={{ p: "5px" }} >Data Time</StyledTableCell>
                             <StyledTableCell sx={{ p: "5px" }} align="right">Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -117,19 +117,29 @@ const AllOrder = () => {
                                     <Typography
                                         sx={{
                                             padding: "2px",
+                                            borderRadius: '3px',
                                             fontSize: "14px",
                                             backgroundColor: colorMassage(row.status),
                                             textAlign: 'center',
-                                            color: '#fff'
+                                            color: '#fff',
+                                            fontWeight: 'bold'
                                         }}>
                                         {getStatus(row.status)}
                                     </Typography>
                                 </StyledTableCell>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{dateTime(row.createdAt)}</StyledTableCell>
 
-                                <StyledTableCell sx={{ display: 'flex', justifyContent: 'space-between', }} >
-                                    <EditStatus orderId={row._id} status={row.status} />
-                                    <VisibilityIcon sx={{ cursor: 'pointer' }} onClick={() => modalHandler(row._id)} color="secondary.light" />
+                                <StyledTableCell
+                                    sx={{
+                                        display: 'flex',
+                                        // justifyContent: 'space-between',
+                                        justifyContent: 'flex-end',
+                                        paddingLeft: '0px'
+                                    }}
+                                >
+                                    {row.status < 4 &&
+                                        <EditStatus orderId={row._id} status={row.status} />}
+                                    <VisibilityIcon sx={{ cursor: 'pointer', marginLeft: '20px' }} onClick={() => modalHandler(row._id)} color="secondary.light" />
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

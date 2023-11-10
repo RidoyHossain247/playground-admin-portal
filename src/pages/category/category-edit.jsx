@@ -1,9 +1,9 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
-import { Box, Button, TextField, Typography } from "@mui/material"
-import { Formik, Form } from 'formik'
-import useData from '../../hooks/useData'
-import { useNavigate } from 'react-router-dom'
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { Form, Formik } from 'formik';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import useData from '../../hooks/useData';
+import { categoryValidation } from '../../validationError';
 
 
 
@@ -22,7 +22,7 @@ const CategoryEdit = () => {
 
     const navigate = useNavigate()
 
-    
+
     const handleSubmit = async (values, actions) => {
         console.log('values=', values)
         var formData = new FormData();
@@ -49,6 +49,7 @@ const CategoryEdit = () => {
                     enableReinitialize={true}
                     initialValues={initValues}
                     onSubmit={handleSubmit}
+                    validationSchema={categoryValidation}
                 >
                     {(formik) => (
                         <Form>
@@ -62,6 +63,9 @@ const CategoryEdit = () => {
                                 name='name'
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name && formik.errors.name}
                             />
                             <TextField
                                 type='file'
@@ -75,12 +79,21 @@ const CategoryEdit = () => {
                                 variant="outlined"
                                 sx={{ my: 1 }}
                                 accept='image/*'
+                                onBlur={formik.handleBlur}
+                                error={formik.errors.image && formik.touched.image && Boolean(formik.errors.image)}
+                                helperText={formik.errors.image && formik.touched.image && formik.errors.image}
                             />
                             <img src={data?.image} height={100} alt='Cat Image' />
 
 
                             <Box textAlign="end" mt={3}>
-                                <Button variant="contained" type='submit'>{formik.isSubmitting ? 'Loading...' : 'Update'}</Button>
+                                <Button
+                                    variant="contained"
+                                    type='submit'
+                                    disabled={!formik.isValid}
+                                >
+                                    {formik.isSubmitting ? 'Loading...' : 'Update'}
+                                </Button>
                             </Box>
                         </Form>
                     )}

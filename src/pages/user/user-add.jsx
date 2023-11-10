@@ -2,8 +2,8 @@
 import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import * as yup from 'yup';
 import useAuth from "../../hooks/useAuth";
+import { userValidation } from "../../validationError";
 
 const AddUser = () => {
     const { handelRegistration } = useAuth()
@@ -12,19 +12,7 @@ const AddUser = () => {
 
 
 
-    const personSchema = yup.object({
-        firstName: yup.string().min(2).required("Please enter your first name"),
-        lastName: yup.string().min(2).required("Please enter your last name"),
-        email: yup.string().email().required("Please enter your email"),
-        password: yup.string().min(2).max(6).required("Please enter your password"),
-        confirmPassword: yup.string().required().oneOf([yup.ref('password'), null], 'confirm passwords does not match'),
-        contact: yup.number()
-            .typeError("That doesn't look like a phone number")
-            .positive("A phone number can't start with a minus")
-            .integer("A phone number can't include a decimal point")
-            .min(8)
-            .required('A phone number is required'),
-    });
+
 
     const initialValues = {
         firstName: "",
@@ -35,8 +23,9 @@ const AddUser = () => {
         contact: ""
     }
 
-    const { values, errors, touched, handleChange, handleSubmit, } = useFormik({
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur, dirty, isValid, resetForm } = useFormik({
         initialValues,
+        validationSchema: userValidation,
         onSubmit: async (values, action) => {
             console.log("value", values)
             const res = await handelRegistration("/users", values)
@@ -45,7 +34,6 @@ const AddUser = () => {
                 navigate("/user/list")
             }
         },
-        validationSchema: personSchema
 
     })
 
@@ -82,6 +70,7 @@ const AddUser = () => {
                         name='firstName'
                         value={values.firstName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.firstName && touched.firstName && Boolean(errors.firstName)}
                         helperText={errors.firstName && touched.firstName && errors.firstName}
 
@@ -95,6 +84,7 @@ const AddUser = () => {
                         name="lastName"
                         value={values.lastName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.lastName && touched.lastName && Boolean(errors.lastName)}
                         helperText={errors.lastName && touched.lastName && errors.lastName}
                     />
@@ -109,6 +99,7 @@ const AddUser = () => {
                         name="email"
                         value={values.email}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.email && touched.email && Boolean(errors.email)}
                         helperText={errors.email && touched.email && errors.email}
                     />
@@ -121,6 +112,7 @@ const AddUser = () => {
                         name="password"
                         value={values.password}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.password && touched.password && Boolean(errors.password)}
                         helperText={errors.password && touched.password && errors.password}
                     />
@@ -135,6 +127,7 @@ const AddUser = () => {
                         name="confirmPassword"
                         value={values.confirmPassword}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.confirmPassword && touched.confirmPassword && Boolean(errors.confirmPassword)}
                         helperText={errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
                     />
@@ -147,6 +140,7 @@ const AddUser = () => {
                         name="contact"
                         value={values.contact}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.contact && touched.contact && Boolean(errors.contact)}
                         helperText={errors.contact && touched.contact && errors.contact}
                     />
@@ -154,22 +148,26 @@ const AddUser = () => {
 
                 <Button
                     fullWidth
-                    type="submit"
-                    sx={{
-                        my: 2,
-                        fontSize: 18,
-                        color: '#fff',
-                        bgcolor: ' #3C1FF4',
-                        ":hover": {
-                            bgcolor: '#3C1FF4'
-                        }
-                    }}
+                    variant="contained"
+                    type='submit'
+                    size={"large"}
+                    conta
+                    disabled={!dirty || !isValid}
                 >
                     Submit
                 </Button>
+                <Box textAlign="end" mt={3}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        type="submit"
+                        onClick={resetForm}
+                    >Reset</Button>
+                </Box>
             </form>
         </Box>
     )
 }
+
 
 export default AddUser

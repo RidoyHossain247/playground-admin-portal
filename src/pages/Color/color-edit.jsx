@@ -1,16 +1,13 @@
-import { useParams } from "react-router-dom"
-import React from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import React from 'react';
 import useData from '../../hooks/useData';
-import { useNavigate } from 'react-router-dom'
+import { colorValidation } from '../../validationError';
 
-const UpdateColor = () => {
-    const params = useParams()
+const UpdateColor = ({ editItems, editHandler }) => {
     const { getDetail, updateData } = useData("/colors")
-    const data = getDetail(`/colors/${params.id}`)
+    const data = getDetail(`/colors/${editItems}`)
 
-    const navigate = useNavigate()
 
     const initialValues = {
         name: data ? data.name : '',
@@ -18,14 +15,14 @@ const UpdateColor = () => {
 
     const formik = useFormik({
         initialValues,
+        validationSchema: colorValidation,
         onSubmit: async (values, action) => {
             console.log(values)
-            const res = await updateData(values, `/colors/${params.id}`)
+            const res = await updateData(values, `/colors/${editItems}`)
             if (res) {
                 action.resetForm()
-                navigate('/color/list')
+                editHandler()
             }
-
         }
     })
     return (
@@ -40,11 +37,19 @@ const UpdateColor = () => {
                     name="name"
                     value={formik.values.name}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.errors.name && formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name && formik.errors.name}
                 />
                 <Box textAlign="end" mt={3}>
-                    <Button variant="contained" type="submit">{formik.isSubmitting ? "Loading" : "Update"}</Button>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={!formik.isValid}
+                    >{formik.isSubmitting ? "Loading" : "Update"}</Button>
                 </Box>
             </form>
+
         </Box>
     )
 }

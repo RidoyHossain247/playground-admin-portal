@@ -48,13 +48,13 @@ const ColorList = () => {
     const { data: Sizes } = useData("/sizes")
     const { data: colors } = useData("/colors")
 
-    const colorData = colors.data
-    const sizeData = Sizes.data
+    const colorData = colors?.data
+    const sizeData = Sizes?.data
 
     return (
         <Box>
             <Box textAlign="center" mb={2}>
-                <Typography fontSize={25} component="h3" color="primary">Color List</Typography>
+                <Typography fontSize={25} component="h3" color="primary">Product List</Typography>
             </Box>
 
             <TableContainer component={Paper}>
@@ -77,6 +77,7 @@ const ColorList = () => {
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.title}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.price}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.discount}</StyledTableCell>
+
                                 {colorData?.map(clr => clr._id == row.colors &&
                                     <StyledTableCell sx={{ p: 1 }} key={clr._id} component="th" scope="row">{clr.name}</StyledTableCell>
                                 )}
